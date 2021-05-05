@@ -7,11 +7,12 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> {
+  var now = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-      child: Text('Timer Page'),
+      child: Text(now.toLocal().toString()),
     ));
   }
 }
