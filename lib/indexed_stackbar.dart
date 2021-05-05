@@ -21,7 +21,7 @@ class _IndexedStackBarState extends State<IndexedStackBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_appbarTitle[_selectedIndex]),
+        title: Text(_appbarTitle[_selectedIndex]!),
         actions: [],
       ),
       body: IndexedStack(
