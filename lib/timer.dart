@@ -11,7 +11,7 @@ class TimerPage extends StatefulWidget {
 class _TimerPageState extends State<TimerPage> {
   late Timer _timer;
   late DateTime _endDate;
-  int duration = 14;
+  int _duration = 14;
   late DateTime _time;
   bool _fired = false;
 
@@ -23,7 +23,7 @@ class _TimerPageState extends State<TimerPage> {
   }
 
   void startTimer() {
-    _endDate = DateTime.now().add(Duration(days: duration));
+    _endDate = DateTime.now().add(Duration(days: _duration));
     _time = DateTime.now();
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       setState(() {
@@ -44,6 +44,12 @@ class _TimerPageState extends State<TimerPage> {
     _timer.cancel();
   }
 
+  void selectDuration(int? selected) {
+    setState(() {
+      _duration = selected!;
+    });
+  }
+
   // .toString().padLeft(2, "0")
   String remainingTime() {
     final remaining = _endDate.difference(_time);
@@ -55,21 +61,73 @@ class _TimerPageState extends State<TimerPage> {
     return formattedRemaining;
   }
 
+  // 要レイアウト調整
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-            child: Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
           remainingTime(),
           style: Theme.of(context).textTheme.headline2,
         ),
+        SelectDurationMenu(onTapHandler: selectDuration),
         TimerButton(
             fired: _fired, startHandler: startTimer, stopHandler: stopTimer),
       ],
-    )));
+    );
+  }
+}
+
+class SelectDurationMenu extends StatefulWidget {
+  final void Function(int?) onTapHandler;
+
+  SelectDurationMenu({Key? key, required this.onTapHandler}) : super(key: key);
+
+  @override
+  _SelectDurationMenuState createState() => _SelectDurationMenuState();
+}
+
+class _SelectDurationMenuState extends State<SelectDurationMenu> {
+  int _selected = 14;
+  final Map<String, int> _durationMap = const {
+    "1day": 1,
+    "1w": 7,
+    "2w": 14,
+    "1m": 30,
+  };
+  late final durationKeys = _durationMap.keys;
+
+  Widget _buildDurationButton(String description, int value, int groupValue,
+      void Function(int?) onChanged) {
+    return Column(
+      children: [
+        Radio(
+            value: value,
+            groupValue: groupValue,
+            onChanged: (int? selected) {
+              onChanged(selected);
+              setState(() {
+                _selected = selected!;
+              });
+            }),
+        Text(description)
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final buttonList = _durationMap.entries
+        .map((e) => _buildDurationButton(
+            e.key, e.value, _selected, widget.onTapHandler))
+        .toList();
+    return Center(
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: buttonList,
+    ));
   }
 }
 
