@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:intl/intl.dart';
-
 class TimerPage extends StatefulWidget {
   static int timeLimit = 0;
   static String id = "timer_page";
@@ -12,16 +10,21 @@ class TimerPage extends StatefulWidget {
 
 class _TimerPageState extends State<TimerPage> {
   late Timer _timer;
-  DateTime _time = DateTime.utc(0, 0, 0);
+  late DateTime _endDate;
+  int duration = 14;
+  late DateTime _time;
   bool _fired = false;
 
   @override
   void initState() {
-    _time = DateTime.utc(0, 0, 0);
+    _time = DateTime.utc(0, 0, 0, 0, 0, 0);
+    _endDate = DateTime.utc(0, 0, 0, 0, 0, 0);
     super.initState();
   }
 
   void startTimer() {
+    _endDate = DateTime.now().add(Duration(days: duration));
+    _time = DateTime.now();
     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       setState(() {
         _time = _time.add(Duration(seconds: 1));
@@ -34,9 +37,22 @@ class _TimerPageState extends State<TimerPage> {
 
   void stopTimer() {
     setState(() {
+      _time = DateTime.utc(0, 0, 0, 0, 0, 0);
+      _endDate = DateTime.utc(0, 0, 0, 0, 0, 0);
       _fired = false;
     });
     _timer.cancel();
+  }
+
+  // .toString().padLeft(2, "0")
+  String remainingTime() {
+    final remaining = _endDate.difference(_time);
+    final days = remaining.inDays;
+    final hours = remaining.inHours - remaining.inDays * 24;
+    final minutes = remaining.inMinutes - remaining.inHours * 60;
+    final seconds = remaining.inSeconds - remaining.inMinutes * 60;
+    final formattedRemaining = "$days d $hours:$minutes:$seconds";
+    return formattedRemaining;
   }
 
   @override
@@ -47,7 +63,7 @@ class _TimerPageState extends State<TimerPage> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          DateFormat.Hms().format(_time),
+          remainingTime(),
           style: Theme.of(context).textTheme.headline2,
         ),
         TimerButton(
