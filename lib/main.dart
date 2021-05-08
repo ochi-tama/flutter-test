@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/history.dart';
-import 'package:test_app/timer.dart';
-import 'package:test_app/home.dart';
-import 'indexed_stackbar.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'history.dart';
+import 'home.dart';
+import 'indexed_stackbar.dart';
+import 'timer.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+/// アプリ本体
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

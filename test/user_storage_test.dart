@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> cleanupSharedPreferences() async {
   final pref = await SharedPreferences.getInstance();
   if (pref.getKeys().isNotEmpty) {
-    await pref.remove(UserStorage.START_DATE);
+    await pref.remove(UserStorage.startDate);
   }
 }
 
@@ -14,7 +14,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() {
     const MethodChannel('plugins.flutter.io/shared_preferences')
-        .setMockMethodCallHandler((MethodCall methodCall) async {
+        .setMockMethodCallHandler((methodCall) async {
       if (methodCall.method == 'getAll') {
         return <String, dynamic>{}; // set initial values here if desired
       }

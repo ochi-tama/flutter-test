@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
+/// Timer Page
 class TimerPage extends StatefulWidget {
-  static int timeLimit = 0;
+  /// Indexed Stack用のID
   static String id = "timer_page";
   @override
   _TimerPageState createState() => _TimerPageState();
@@ -11,7 +13,7 @@ class TimerPage extends StatefulWidget {
 class _TimerPageState extends State<TimerPage> {
   late Timer _timer;
   late DateTime _endDate;
-  int _duration = 14;
+  int _duration = SelectDurationMenu.twoWeek;
   late DateTime _time;
   bool _fired = false;
 
@@ -25,7 +27,7 @@ class _TimerPageState extends State<TimerPage> {
   void startTimer() {
     _endDate = DateTime.now().add(Duration(days: _duration));
     _time = DateTime.now();
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _time = _time.add(Duration(seconds: 1));
       });
@@ -80,9 +82,24 @@ class _TimerPageState extends State<TimerPage> {
   }
 }
 
+/// NoDoc
 class SelectDurationMenu extends StatefulWidget {
+  /// NoDoc
   final void Function(int?) onTapHandler;
 
+  /// 定数
+  static const twoWeek = 14;
+
+  /// 定数
+  static const oneWeek = 7;
+
+  /// 定数
+  static const oneMonth = 30;
+
+  /// 定数
+  static const oneDay = 1;
+
+  /// NoDoc
   SelectDurationMenu({Key? key, required this.onTapHandler}) : super(key: key);
 
   @override
@@ -92,10 +109,10 @@ class SelectDurationMenu extends StatefulWidget {
 class _SelectDurationMenuState extends State<SelectDurationMenu> {
   int _selected = 14;
   final Map<String, int> _durationMap = const {
-    "1day": 1,
-    "1w": 7,
-    "2w": 14,
-    "1m": 30,
+    "1day": SelectDurationMenu.oneDay,
+    "1w": SelectDurationMenu.oneWeek,
+    "2w": SelectDurationMenu.twoWeek,
+    "1m": SelectDurationMenu.oneMonth,
   };
   late final durationKeys = _durationMap.keys;
 
@@ -106,6 +123,7 @@ class _SelectDurationMenuState extends State<SelectDurationMenu> {
         Radio(
             value: value,
             groupValue: groupValue,
+            // ignore: avoid_types_on_closure_parameters
             onChanged: (int? selected) {
               onChanged(selected);
               setState(() {
@@ -131,18 +149,26 @@ class _SelectDurationMenuState extends State<SelectDurationMenu> {
   }
 }
 
+/// NoDoc
 class TimerButton extends StatelessWidget {
+  /// NoDoc
   TimerButton(
       {Key? key,
-      this.fired: false,
+      this.fired = false,
       required this.startHandler,
       required this.stopHandler})
       : super(key: key);
 
+  /// NoDoc
   final bool fired;
-  final startHandler;
-  final stopHandler;
 
+  /// NoDoc
+  final void Function() startHandler;
+
+  /// NoDoc
+  final void Function() stopHandler;
+
+  /// NoDoc
   Widget buildStartButton(BuildContext context) {
     return Container(
       child: FloatingActionButton(
@@ -152,6 +178,7 @@ class TimerButton extends StatelessWidget {
     );
   }
 
+  /// NoDoc
   Widget buildStopButton(BuildContext context) {
     return Container(
         child: Row(
