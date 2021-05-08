@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'history.dart';
-import 'home.dart';
 import 'indexed_stackbar.dart';
-import 'timer.dart';
+import 'ui/history.dart';
+import 'ui/home.dart';
+import 'ui/timer.dart';
 
 void main() {
   runApp(MyApp());

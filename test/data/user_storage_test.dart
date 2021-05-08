@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:test_app/store/user_storage.dart';
+import 'package:test_app/data/local/user_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> cleanupSharedPreferences() async {
   final pref = await SharedPreferences.getInstance();
   if (pref.getKeys().isNotEmpty) {
-    await pref.remove(UserStorage.startDate);
+    await pref.remove(UserData.startDate);
   }
 }
 
@@ -28,14 +28,14 @@ void main() {
     });
 
     test('未登録時にはnullが返ってくる', () async {
-      final startDate = await UserStorage().getStartTime();
+      final startDate = await UserData().getStartTime();
       expect(startDate, isNull);
     });
 
     test('現在時刻を追加したら現在時刻が返ってくる', () async {
       final now = DateTime.now();
-      await UserStorage().setStartTime(now);
-      final startDate = await UserStorage().getStartTime();
+      await UserData().setStartTime(now);
+      final startDate = await UserData().getStartTime();
       expect(startDate, equals(now));
     });
   });
@@ -47,23 +47,23 @@ void main() {
 
     test('現在時刻を追加したらStoreに登録される', () async {
       final now = DateTime.now();
-      await UserStorage().setStartTime(now);
-      expect(await UserStorage().getStartTime(), equals(now));
+      await UserData().setStartTime(now);
+      expect(await UserData().getStartTime(), equals(now));
     });
   });
 
   group('Storage deleteStorageのテスト', () {
     test('データが空でも初期化できる', () async {
-      await UserStorage().deleteStorage();
-      final startDate = await UserStorage().getStartTime();
+      await UserData().deleteStorage();
+      final startDate = await UserData().getStartTime();
       expect(startDate, isNull);
     });
 
     test('入力されていたデータは初期化される', () async {
       final now = DateTime.now();
-      await UserStorage().setStartTime(now);
-      await UserStorage().deleteStorage();
-      final startDate = await UserStorage().getStartTime();
+      await UserData().setStartTime(now);
+      await UserData().deleteStorage();
+      final startDate = await UserData().getStartTime();
       expect(startDate, isNull);
     });
   });
