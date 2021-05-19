@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
 part 'wearing_timer.freezed.dart';
+part 'wearing_timer.g.dart';
 
 @freezed
 
@@ -10,11 +11,16 @@ class WearingTimer with _$WearingTimer {
   const WearingTimer._();
 
   /// NoDoc
-  const factory WearingTimer(
+  factory WearingTimer(
       {required DateTime startDate,
       required int duration,
+      String? id,
       DateTime? endDate,
       DateTime? actualEndDate}) = _WearingTimer;
+
+  /// NoDoc
+  factory WearingTimer.fromJson(Map<String, dynamic> json) =>
+      _$WearingTimerFromJson(json);
 
   /// check if timer started
   bool isTimerStarted() {
