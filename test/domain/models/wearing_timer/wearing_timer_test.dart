@@ -2,10 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
 
-final testTimer = WearingTimer(startDate: DateTime(2021, 4, 17), duration: 14);
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  final testTimer =
+      WearingTimer(startDate: DateTime(2021, 4, 17), duration: 14);
   setUpAll(() {
     const MethodChannel('plugins.flutter.io/shared_preferences')
         .setMockMethodCallHandler((methodCall) async {
