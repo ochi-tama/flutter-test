@@ -1,17 +1,16 @@
-import 'package:test_app/application/wearing_timer/register/register_input_data.dart';
-
 import '../../domain/models/wearing_timer/wearing_timer.dart';
-import 'find/find_interactor.dart';
-import 'register/register_interactor.dart';
+import 'find/find_input_port.dart';
+import 'register/register_input_data.dart';
+import 'register/register_input_port.dart';
 
 /// No Doc
 class WearingTimerApplicationService {
   /// No Doc
   WearingTimerApplicationService(
-      {FindInteractor? findInteractor, RegisterInteractor? registerInteractor});
+      {FindInputPort? findInteractor, RegisterInputPort? registerInteractor});
 
-  late final FindInteractor _findInteractor;
-  late final RegisterInteractor _registerInteractor;
+  late final FindInputPort _findInteractor;
+  late final RegisterInputPort _registerInteractor;
 
   /// No Doc
   Future<WearingTimer?> findWearingTimer() async {
