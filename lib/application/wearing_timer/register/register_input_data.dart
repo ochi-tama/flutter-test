@@ -1,11 +1,12 @@
-import '../../../domain/models/wearing_timer/wearing_timer.dart';
-
 /// No Doc
 
 class RegisterInputData {
   /// No Doc
-  RegisterInputData({required WearingTimer data}) : wearingTimer = data;
+  RegisterInputData(this.startDate, this.duration);
 
   /// No Doc
-  final WearingTimer wearingTimer;
+  final DateTime startDate;
+
+  /// No Doc
+  final int duration;
 }

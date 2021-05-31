@@ -4,5 +4,5 @@ import 'register_input_data.dart';
 // ignore: one_member_abstracts
 abstract class RegisterInputPort {
   /// No Doc
-  Future<bool> handle(RegisterInputData registerInputData);
+  Future<void> handle(RegisterInputData registerInputData);
 }
