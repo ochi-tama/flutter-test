@@ -26,6 +26,5 @@ class RegisterInteractor extends RegisterInputPort {
 
     final outputData = RegisterOutputData.fromWearingTimer(startedWearingTimer);
     _registerOutputPort.output(outputData);
-    //return await _wearingTimerRepository.save(wearingTimer);
   }
 }
