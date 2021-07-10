@@ -1,38 +1,28 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../domain/models/wearing_timer/wearing_timer.dart';
 
+part 'find_output_data.freezed.dart';
+
 /// No Doc
 // ignore: one_member_abstracts
-@immutable
-class FindOutputData {
-  /// No Doc
-  FindOutputData({this.startDate, this.endDate, this.duration});
+@freezed
+class FindOutputData with _$FindOutputData {
+  const FindOutputData._();
 
   /// No Doc
-  factory FindOutputData.fromWearingTimer(WearingTimer? wearingTimer) {
+  const factory FindOutputData(
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration}) = _FindOutputData;
+
+  /// No Doc
+  static FindOutputData fromWearingTimer(WearingTimer? wearingTimer) {
     return FindOutputData(
         startDate: wearingTimer?.startDate,
         endDate: wearingTimer?.endDate,
         duration: wearingTimer?.duration);
   }
-
-  /// No Doc
-  final DateTime? startDate;
-
-  /// No Doc
-  final DateTime? endDate;
-
-  /// No Doc
-  final int? duration;
-
-  @override
-  bool operator ==(Object other) =>
-      other is FindOutputData &&
-      other.startDate == startDate &&
-      other.endDate == endDate &&
-      other.duration == duration;
-
-  @override
-  int get hashCode => hashValues(startDate, endDate, duration);
 }
