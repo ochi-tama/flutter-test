@@ -2,7 +2,10 @@ import 'package:riverpod/riverpod.dart';
 
 import 'application/wearing_timer/find/find_input_port.dart';
 import 'application/wearing_timer/find/find_interactor.dart';
-import 'application/wearing_timer/find/find_output_presenter.dart';
+import 'application/wearing_timer/find/find_output_port.dart';
+import 'application/wearing_timer/find/find_presenter.dart';
+import 'application/wearing_timer/find/find_presenter_data.dart';
+import 'application/wearing_timer/find/find_presenter_notifier.dart';
 import 'application/wearing_timer/register/register_input_port.dart';
 import 'application/wearing_timer/register/register_interactor.dart';
 import 'application/wearing_timer/register/register_output_presenter.dart';
@@ -24,13 +27,21 @@ final wearingTimerRepositoryProvider = Provider<WearingTimerRepository>((ref) {
 });
 
 /// No Doc
-final findOutputPresenterProvider =
-    Provider<FindOutputPresenter>((ref) => FindOutputPresenter.initialize());
+final findPresenterNotifierProvider =
+    StateNotifierProvider<FindPresenterNotifier, FindPresenterData>(
+        (ref) => FindPresenterNotifier());
+
+/// No Doc
+final findPresenterProvider = Provider<FindOutputPort>((ref) {
+  final findPresenterNotifier =
+      ref.read(findPresenterNotifierProvider.notifier);
+  return FindPresenter(findPresenterNotifier);
+});
 
 /// No Doc
 final findInteractorProvider = Provider<FindInputPort>((ref) {
   final wearingTimerRepository = ref.read(wearingTimerRepositoryProvider);
-  final findOutputPort = ref.read(findOutputPresenterProvider);
+  final findOutputPort = ref.read(findPresenterProvider);
   return FindInteractor(
       wbRepository: wearingTimerRepository, findOutputPort: findOutputPort);
 });
@@ -59,9 +70,10 @@ final wearingTimerControllerProvider = Provider<WearingTimerController>((ref) {
 /// No Doc
 final timerViewModelProvider =
     StateNotifierProvider<TimerViewModel, TimerViewState>((ref) {
-  final findOutputPresenter = ref.watch(findOutputPresenterProvider);
+  final findPresenterData = ref.watch(findPresenterNotifierProvider);
   final wearingTimerController = ref.read(wearingTimerControllerProvider);
+
   return TimerViewModel(
-      findOutputPresenter: findOutputPresenter,
+      findOutputPresenter: findPresenterData,
       wearingTimerController: wearingTimerController);
 });
