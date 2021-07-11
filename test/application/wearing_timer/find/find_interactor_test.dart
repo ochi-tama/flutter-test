@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:test_app/application/wearing_timer/find/find_interactor.dart';
 import 'package:test_app/application/wearing_timer/find/find_presenter.dart';
-import 'package:test_app/application/wearing_timer/find/find_presenter_data.dart';
+import 'package:test_app/application/wearing_timer/find/data/find_presenter_data.dart';
 import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
 import 'package:test_app/provider.dart';
 

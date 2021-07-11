@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain/models/wearing_timer/wearing_timer.dart';
+import '../../../../domain/models/wearing_timer/wearing_timer.dart';
 
 part 'find_output_data.freezed.dart';
 

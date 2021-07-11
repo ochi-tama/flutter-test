@@ -1,5 +1,5 @@
 import 'package:test_app/application/wearing_timer/find/find_input_port.dart';
-import 'package:test_app/application/wearing_timer/find/find_output_data.dart';
+import 'package:test_app/application/wearing_timer/find/data/find_output_data.dart';
 import 'package:test_app/application/wearing_timer/find/find_output_port.dart';
 
 import 'data/fake_wearing_timer.dart';

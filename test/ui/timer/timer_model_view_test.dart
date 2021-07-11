@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:test_app/provider.dart';
-import 'package:test_app/ui/timer/timer_view_state.dart';
+import 'package:test_app/ui/timer/model/timer_view_state.dart';
 
 import '../../utils/fake_wearing_timer_repository_impl.dart';
 
@@ -52,6 +52,7 @@ void main() {
 
       await notifier.registerTimer();
 
+      /// 時刻を内部で見ているので数値が分からない
       expect(
           container.read(timerViewModelProvider)
               is TimerViewStateTimerActivated,

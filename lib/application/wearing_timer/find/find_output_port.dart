@@ -1,4 +1,4 @@
-import 'find_output_data.dart';
+import 'data/find_output_data.dart';
 
 /// No Doc
 // ignore: one_member_abstracts

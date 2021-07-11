@@ -1,4 +1,4 @@
-import '../../../domain/models/wearing_timer/wearing_timer.dart';
+import '../../../../domain/models/wearing_timer/wearing_timer.dart';
 
 /// No Doc
 // ignore: one_member_abstracts

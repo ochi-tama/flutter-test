@@ -1,8 +1,8 @@
 import 'package:riverpod/riverpod.dart';
 
-import '../../application/wearing_timer/find/find_presenter_data.dart';
-import '../../application/wearing_timer/register/register_input_data.dart';
-import '../../application/wearing_timer/wearing_timer_controller.dart';
+import '../../../application/wearing_timer/find/data/find_presenter_data.dart';
+import '../../../application/wearing_timer/register/register_input_data.dart';
+import '../../../application/wearing_timer/wearing_timer_controller.dart';
 import 'timer_view_state.dart';
 
 /// TimerViewModel
@@ -32,9 +32,12 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
   }
 
   /// No Doc
-  void setDuration(int duration) {
+  void setDuration(int? duration) {
+    if (duration == null) return;
     state = TimerViewState.durationSet(duration: duration);
   }
+
+  void findTimer() async {}
 
   /// register timer handler
   Future<void> registerTimer() async {

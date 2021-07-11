@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:test_app/application/wearing_timer/find/find_output_data.dart';
+import 'package:test_app/application/wearing_timer/find/data/find_output_data.dart';
 import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
 
 void main() {

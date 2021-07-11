@@ -1,10 +1,10 @@
 import 'package:riverpod/riverpod.dart';
 
+import 'application/wearing_timer/find/data/find_presenter_data.dart';
 import 'application/wearing_timer/find/find_input_port.dart';
 import 'application/wearing_timer/find/find_interactor.dart';
 import 'application/wearing_timer/find/find_output_port.dart';
 import 'application/wearing_timer/find/find_presenter.dart';
-import 'application/wearing_timer/find/find_presenter_data.dart';
 import 'application/wearing_timer/find/find_presenter_notifier.dart';
 import 'application/wearing_timer/register/register_input_port.dart';
 import 'application/wearing_timer/register/register_interactor.dart';
@@ -13,8 +13,8 @@ import 'application/wearing_timer/wearing_timer_controller.dart';
 import 'domain/datasources/app_shared_preferences.dart';
 import 'domain/models/wearing_timer/wearing_timer_repository.dart';
 import 'infrastructure/local/wearing_timer_repository_impl.dart';
-import 'ui/timer/timer_view_model.dart';
-import 'ui/timer/timer_view_state.dart';
+import 'ui/timer/model/timer_view_model.dart';
+import 'ui/timer/model/timer_view_state.dart';
 
 /// No Doc
 final appSharedPreferencesProvider =
