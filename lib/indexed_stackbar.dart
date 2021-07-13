@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'ui/history.dart';
 import 'ui/home.dart';
-import 'ui/timer.dart';
+import 'ui/timer/timer.dart';
 
 /// Indexed Stack
 class IndexedStackBar extends StatefulWidget {

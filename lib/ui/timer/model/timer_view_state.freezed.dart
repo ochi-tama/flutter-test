@@ -17,38 +17,59 @@ class _$TimerViewStateTearOff {
   const _$TimerViewStateTearOff();
 
   _TimerViewState call(
-      {DateTime? startDate, DateTime? endDate, int? duration = 14}) {
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration = 14,
+      int? remainedDays}) {
     return _TimerViewState(
       startDate: startDate,
       endDate: endDate,
       duration: duration,
+      remainedDays: remainedDays,
     );
   }
 
-  TimewViewStateInitial initial({int? duration = 14}) {
+  TimewViewStateInitial initial({int? duration = 14, int? remainedDays}) {
     return TimewViewStateInitial(
       duration: duration,
+      remainedDays: remainedDays,
     );
   }
 
-  TimerViewStateLoading loading({int? duration = 14}) {
+  TimerViewStateLoading loading({int? duration = 14, int? remainedDays}) {
     return TimerViewStateLoading(
       duration: duration,
+      remainedDays: remainedDays,
     );
   }
 
-  TimerViewStateDurationSet durationSet({int? duration = 14}) {
+  TimerViewStateDurationSet durationSet(
+      {int? duration = 14, int? remainedDays}) {
     return TimerViewStateDurationSet(
       duration: duration,
+      remainedDays: remainedDays,
     );
   }
 
-  TimerViewStateTimerActivated timerActivated(
-      {DateTime? startDate, DateTime? endDate, int? duration = 14}) {
-    return TimerViewStateTimerActivated(
+  TimerViewStateBeforeActivated beforeActivated(
+      {required DateTime startDate, int? duration = 14, int? remainedDays}) {
+    return TimerViewStateBeforeActivated(
+      startDate: startDate,
+      duration: duration,
+      remainedDays: remainedDays,
+    );
+  }
+
+  TimerViewStateActivated activated(
+      {required DateTime startDate,
+      required DateTime endDate,
+      int? duration = 14,
+      int? remainedDays}) {
+    return TimerViewStateActivated(
       startDate: startDate,
       endDate: endDate,
       duration: duration,
+      remainedDays: remainedDays,
     );
   }
 
@@ -56,11 +77,13 @@ class _$TimerViewStateTearOff {
       {DateTime? startDate,
       DateTime? endDate,
       int? duration = 14,
+      int? remainedDays,
       String? error}) {
     return TimerViewStateError(
       startDate: startDate,
       endDate: endDate,
       duration: duration,
+      remainedDays: remainedDays,
       error: error,
     );
   }
@@ -72,33 +95,42 @@ const $TimerViewState = _$TimerViewStateTearOff();
 /// @nodoc
 mixin _$TimerViewState {
   int? get duration => throw _privateConstructorUsedError;
+  int? get remainedDays => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) =>
@@ -109,8 +141,9 @@ mixin _$TimerViewState {
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -120,7 +153,8 @@ mixin _$TimerViewState {
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) =>
@@ -136,7 +170,7 @@ abstract class $TimerViewStateCopyWith<$Res> {
   factory $TimerViewStateCopyWith(
           TimerViewState value, $Res Function(TimerViewState) then) =
       _$TimerViewStateCopyWithImpl<$Res>;
-  $Res call({int? duration});
+  $Res call({int? duration, int? remainedDays});
 }
 
 /// @nodoc
@@ -151,11 +185,16 @@ class _$TimerViewStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? duration = freezed,
+    Object? remainedDays = freezed,
   }) {
     return _then(_value.copyWith(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -168,7 +207,11 @@ abstract class _$TimerViewStateCopyWith<$Res>
           _TimerViewState value, $Res Function(_TimerViewState) then) =
       __$TimerViewStateCopyWithImpl<$Res>;
   @override
-  $Res call({DateTime? startDate, DateTime? endDate, int? duration});
+  $Res call(
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration,
+      int? remainedDays});
 }
 
 /// @nodoc
@@ -187,6 +230,7 @@ class __$TimerViewStateCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? duration = freezed,
+    Object? remainedDays = freezed,
   }) {
     return _then(_TimerViewState(
       startDate: startDate == freezed
@@ -201,6 +245,10 @@ class __$TimerViewStateCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -208,7 +256,8 @@ class __$TimerViewStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
-  _$_TimerViewState({this.startDate, this.endDate, this.duration = 14})
+  _$_TimerViewState(
+      {this.startDate, this.endDate, this.duration = 14, this.remainedDays})
       : super._();
 
   @override
@@ -218,10 +267,12 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
   @JsonKey(defaultValue: 14)
   @override
   final int? duration;
+  @override
+  final int? remainedDays;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerViewState(startDate: $startDate, endDate: $endDate, duration: $duration)';
+    return 'TimerViewState(startDate: $startDate, endDate: $endDate, duration: $duration, remainedDays: $remainedDays)';
   }
 
   @override
@@ -231,7 +282,8 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'TimerViewState'))
       ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('endDate', endDate))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays));
   }
 
   @override
@@ -246,7 +298,10 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
                     .equals(other.endDate, endDate)) &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+                    .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)));
   }
 
   @override
@@ -254,7 +309,8 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(startDate) ^
       const DeepCollectionEquality().hash(endDate) ^
-      const DeepCollectionEquality().hash(duration);
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays);
 
   @JsonKey(ignore: true)
   @override
@@ -264,38 +320,46 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) {
-    return $default(startDate, endDate, duration);
+    return $default(startDate, endDate, duration, remainedDays);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(startDate, endDate, duration);
+      return $default(startDate, endDate, duration, remainedDays);
     }
     return orElse();
   }
@@ -307,8 +371,9 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) {
     return $default(this);
@@ -321,7 +386,8 @@ class _$_TimerViewState extends _TimerViewState with DiagnosticableTreeMixin {
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) {
@@ -336,13 +402,16 @@ abstract class _TimerViewState extends TimerViewState {
   factory _TimerViewState(
       {DateTime? startDate,
       DateTime? endDate,
-      int? duration}) = _$_TimerViewState;
+      int? duration,
+      int? remainedDays}) = _$_TimerViewState;
   _TimerViewState._() : super._();
 
   DateTime? get startDate => throw _privateConstructorUsedError;
   DateTime? get endDate => throw _privateConstructorUsedError;
   @override
   int? get duration => throw _privateConstructorUsedError;
+  @override
+  int? get remainedDays => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$TimerViewStateCopyWith<_TimerViewState> get copyWith =>
@@ -356,7 +425,7 @@ abstract class $TimewViewStateInitialCopyWith<$Res>
           $Res Function(TimewViewStateInitial) then) =
       _$TimewViewStateInitialCopyWithImpl<$Res>;
   @override
-  $Res call({int? duration});
+  $Res call({int? duration, int? remainedDays});
 }
 
 /// @nodoc
@@ -373,11 +442,16 @@ class _$TimewViewStateInitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? duration = freezed,
+    Object? remainedDays = freezed,
   }) {
     return _then(TimewViewStateInitial(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -387,15 +461,17 @@ class _$TimewViewStateInitialCopyWithImpl<$Res>
 
 class _$TimewViewStateInitial extends TimewViewStateInitial
     with DiagnosticableTreeMixin {
-  _$TimewViewStateInitial({this.duration = 14}) : super._();
+  _$TimewViewStateInitial({this.duration = 14, this.remainedDays}) : super._();
 
   @JsonKey(defaultValue: 14)
   @override
   final int? duration;
+  @override
+  final int? remainedDays;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerViewState.initial(duration: $duration)';
+    return 'TimerViewState.initial(duration: $duration, remainedDays: $remainedDays)';
   }
 
   @override
@@ -403,7 +479,8 @@ class _$TimewViewStateInitial extends TimewViewStateInitial
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TimerViewState.initial'))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays));
   }
 
   @override
@@ -412,12 +489,17 @@ class _$TimewViewStateInitial extends TimewViewStateInitial
         (other is TimewViewStateInitial &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+                    .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(duration);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays);
 
   @JsonKey(ignore: true)
   @override
@@ -428,38 +510,46 @@ class _$TimewViewStateInitial extends TimewViewStateInitial
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) {
-    return initial(duration);
+    return initial(duration, remainedDays);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(duration);
+      return initial(duration, remainedDays);
     }
     return orElse();
   }
@@ -471,8 +561,9 @@ class _$TimewViewStateInitial extends TimewViewStateInitial
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) {
     return initial(this);
@@ -485,7 +576,8 @@ class _$TimewViewStateInitial extends TimewViewStateInitial
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) {
@@ -497,11 +589,14 @@ class _$TimewViewStateInitial extends TimewViewStateInitial
 }
 
 abstract class TimewViewStateInitial extends TimerViewState {
-  factory TimewViewStateInitial({int? duration}) = _$TimewViewStateInitial;
+  factory TimewViewStateInitial({int? duration, int? remainedDays}) =
+      _$TimewViewStateInitial;
   TimewViewStateInitial._() : super._();
 
   @override
   int? get duration => throw _privateConstructorUsedError;
+  @override
+  int? get remainedDays => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $TimewViewStateInitialCopyWith<TimewViewStateInitial> get copyWith =>
@@ -515,7 +610,7 @@ abstract class $TimerViewStateLoadingCopyWith<$Res>
           $Res Function(TimerViewStateLoading) then) =
       _$TimerViewStateLoadingCopyWithImpl<$Res>;
   @override
-  $Res call({int? duration});
+  $Res call({int? duration, int? remainedDays});
 }
 
 /// @nodoc
@@ -532,11 +627,16 @@ class _$TimerViewStateLoadingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? duration = freezed,
+    Object? remainedDays = freezed,
   }) {
     return _then(TimerViewStateLoading(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -546,15 +646,17 @@ class _$TimerViewStateLoadingCopyWithImpl<$Res>
 
 class _$TimerViewStateLoading extends TimerViewStateLoading
     with DiagnosticableTreeMixin {
-  _$TimerViewStateLoading({this.duration = 14}) : super._();
+  _$TimerViewStateLoading({this.duration = 14, this.remainedDays}) : super._();
 
   @JsonKey(defaultValue: 14)
   @override
   final int? duration;
+  @override
+  final int? remainedDays;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerViewState.loading(duration: $duration)';
+    return 'TimerViewState.loading(duration: $duration, remainedDays: $remainedDays)';
   }
 
   @override
@@ -562,7 +664,8 @@ class _$TimerViewStateLoading extends TimerViewStateLoading
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TimerViewState.loading'))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays));
   }
 
   @override
@@ -571,12 +674,17 @@ class _$TimerViewStateLoading extends TimerViewStateLoading
         (other is TimerViewStateLoading &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+                    .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(duration);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays);
 
   @JsonKey(ignore: true)
   @override
@@ -587,38 +695,46 @@ class _$TimerViewStateLoading extends TimerViewStateLoading
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) {
-    return loading(duration);
+    return loading(duration, remainedDays);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(duration);
+      return loading(duration, remainedDays);
     }
     return orElse();
   }
@@ -630,8 +746,9 @@ class _$TimerViewStateLoading extends TimerViewStateLoading
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) {
     return loading(this);
@@ -644,7 +761,8 @@ class _$TimerViewStateLoading extends TimerViewStateLoading
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) {
@@ -656,11 +774,14 @@ class _$TimerViewStateLoading extends TimerViewStateLoading
 }
 
 abstract class TimerViewStateLoading extends TimerViewState {
-  factory TimerViewStateLoading({int? duration}) = _$TimerViewStateLoading;
+  factory TimerViewStateLoading({int? duration, int? remainedDays}) =
+      _$TimerViewStateLoading;
   TimerViewStateLoading._() : super._();
 
   @override
   int? get duration => throw _privateConstructorUsedError;
+  @override
+  int? get remainedDays => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $TimerViewStateLoadingCopyWith<TimerViewStateLoading> get copyWith =>
@@ -674,7 +795,7 @@ abstract class $TimerViewStateDurationSetCopyWith<$Res>
           $Res Function(TimerViewStateDurationSet) then) =
       _$TimerViewStateDurationSetCopyWithImpl<$Res>;
   @override
-  $Res call({int? duration});
+  $Res call({int? duration, int? remainedDays});
 }
 
 /// @nodoc
@@ -692,11 +813,16 @@ class _$TimerViewStateDurationSetCopyWithImpl<$Res>
   @override
   $Res call({
     Object? duration = freezed,
+    Object? remainedDays = freezed,
   }) {
     return _then(TimerViewStateDurationSet(
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -706,15 +832,18 @@ class _$TimerViewStateDurationSetCopyWithImpl<$Res>
 
 class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
     with DiagnosticableTreeMixin {
-  _$TimerViewStateDurationSet({this.duration = 14}) : super._();
+  _$TimerViewStateDurationSet({this.duration = 14, this.remainedDays})
+      : super._();
 
   @JsonKey(defaultValue: 14)
   @override
   final int? duration;
+  @override
+  final int? remainedDays;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerViewState.durationSet(duration: $duration)';
+    return 'TimerViewState.durationSet(duration: $duration, remainedDays: $remainedDays)';
   }
 
   @override
@@ -722,7 +851,8 @@ class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'TimerViewState.durationSet'))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays));
   }
 
   @override
@@ -731,12 +861,17 @@ class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
         (other is TimerViewStateDurationSet &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+                    .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(duration);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays);
 
   @JsonKey(ignore: true)
   @override
@@ -747,38 +882,46 @@ class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) {
-    return durationSet(duration);
+    return durationSet(duration, remainedDays);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) {
     if (durationSet != null) {
-      return durationSet(duration);
+      return durationSet(duration, remainedDays);
     }
     return orElse();
   }
@@ -790,8 +933,9 @@ class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) {
     return durationSet(this);
@@ -804,7 +948,8 @@ class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) {
@@ -816,12 +961,14 @@ class _$TimerViewStateDurationSet extends TimerViewStateDurationSet
 }
 
 abstract class TimerViewStateDurationSet extends TimerViewState {
-  factory TimerViewStateDurationSet({int? duration}) =
+  factory TimerViewStateDurationSet({int? duration, int? remainedDays}) =
       _$TimerViewStateDurationSet;
   TimerViewStateDurationSet._() : super._();
 
   @override
   int? get duration => throw _privateConstructorUsedError;
+  @override
+  int? get remainedDays => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   $TimerViewStateDurationSetCopyWith<TimerViewStateDurationSet> get copyWith =>
@@ -829,47 +976,47 @@ abstract class TimerViewStateDurationSet extends TimerViewState {
 }
 
 /// @nodoc
-abstract class $TimerViewStateTimerActivatedCopyWith<$Res>
+abstract class $TimerViewStateBeforeActivatedCopyWith<$Res>
     implements $TimerViewStateCopyWith<$Res> {
-  factory $TimerViewStateTimerActivatedCopyWith(
-          TimerViewStateTimerActivated value,
-          $Res Function(TimerViewStateTimerActivated) then) =
-      _$TimerViewStateTimerActivatedCopyWithImpl<$Res>;
+  factory $TimerViewStateBeforeActivatedCopyWith(
+          TimerViewStateBeforeActivated value,
+          $Res Function(TimerViewStateBeforeActivated) then) =
+      _$TimerViewStateBeforeActivatedCopyWithImpl<$Res>;
   @override
-  $Res call({DateTime? startDate, DateTime? endDate, int? duration});
+  $Res call({DateTime startDate, int? duration, int? remainedDays});
 }
 
 /// @nodoc
-class _$TimerViewStateTimerActivatedCopyWithImpl<$Res>
+class _$TimerViewStateBeforeActivatedCopyWithImpl<$Res>
     extends _$TimerViewStateCopyWithImpl<$Res>
-    implements $TimerViewStateTimerActivatedCopyWith<$Res> {
-  _$TimerViewStateTimerActivatedCopyWithImpl(
-      TimerViewStateTimerActivated _value,
-      $Res Function(TimerViewStateTimerActivated) _then)
-      : super(_value, (v) => _then(v as TimerViewStateTimerActivated));
+    implements $TimerViewStateBeforeActivatedCopyWith<$Res> {
+  _$TimerViewStateBeforeActivatedCopyWithImpl(
+      TimerViewStateBeforeActivated _value,
+      $Res Function(TimerViewStateBeforeActivated) _then)
+      : super(_value, (v) => _then(v as TimerViewStateBeforeActivated));
 
   @override
-  TimerViewStateTimerActivated get _value =>
-      super._value as TimerViewStateTimerActivated;
+  TimerViewStateBeforeActivated get _value =>
+      super._value as TimerViewStateBeforeActivated;
 
   @override
   $Res call({
     Object? startDate = freezed,
-    Object? endDate = freezed,
     Object? duration = freezed,
+    Object? remainedDays = freezed,
   }) {
-    return _then(TimerViewStateTimerActivated(
+    return _then(TimerViewStateBeforeActivated(
       startDate: startDate == freezed
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      endDate: endDate == freezed
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -877,98 +1024,106 @@ class _$TimerViewStateTimerActivatedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TimerViewStateTimerActivated extends TimerViewStateTimerActivated
+class _$TimerViewStateBeforeActivated extends TimerViewStateBeforeActivated
     with DiagnosticableTreeMixin {
-  _$TimerViewStateTimerActivated(
-      {this.startDate, this.endDate, this.duration = 14})
+  _$TimerViewStateBeforeActivated(
+      {required this.startDate, this.duration = 14, this.remainedDays})
       : super._();
 
   @override
-  final DateTime? startDate;
-  @override
-  final DateTime? endDate;
+  final DateTime startDate;
   @JsonKey(defaultValue: 14)
   @override
   final int? duration;
+  @override
+  final int? remainedDays;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerViewState.timerActivated(startDate: $startDate, endDate: $endDate, duration: $duration)';
+    return 'TimerViewState.beforeActivated(startDate: $startDate, duration: $duration, remainedDays: $remainedDays)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'TimerViewState.timerActivated'))
+      ..add(DiagnosticsProperty('type', 'TimerViewState.beforeActivated'))
       ..add(DiagnosticsProperty('startDate', startDate))
-      ..add(DiagnosticsProperty('endDate', endDate))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is TimerViewStateTimerActivated &&
+        (other is TimerViewStateBeforeActivated &&
             (identical(other.startDate, startDate) ||
                 const DeepCollectionEquality()
                     .equals(other.startDate, startDate)) &&
-            (identical(other.endDate, endDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.endDate, endDate)) &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+                    .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(startDate) ^
-      const DeepCollectionEquality().hash(endDate) ^
-      const DeepCollectionEquality().hash(duration);
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays);
 
   @JsonKey(ignore: true)
   @override
-  $TimerViewStateTimerActivatedCopyWith<TimerViewStateTimerActivated>
-      get copyWith => _$TimerViewStateTimerActivatedCopyWithImpl<
-          TimerViewStateTimerActivated>(this, _$identity);
+  $TimerViewStateBeforeActivatedCopyWith<TimerViewStateBeforeActivated>
+      get copyWith => _$TimerViewStateBeforeActivatedCopyWithImpl<
+          TimerViewStateBeforeActivated>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) {
-    return timerActivated(startDate, endDate, duration);
+    return beforeActivated(startDate, duration, remainedDays);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) {
-    if (timerActivated != null) {
-      return timerActivated(startDate, endDate, duration);
+    if (beforeActivated != null) {
+      return beforeActivated(startDate, duration, remainedDays);
     }
     return orElse();
   }
@@ -980,11 +1135,12 @@ class _$TimerViewStateTimerActivated extends TimerViewStateTimerActivated
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) {
-    return timerActivated(this);
+    return beforeActivated(this);
   }
 
   @override
@@ -994,32 +1150,254 @@ class _$TimerViewStateTimerActivated extends TimerViewStateTimerActivated
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) {
-    if (timerActivated != null) {
-      return timerActivated(this);
+    if (beforeActivated != null) {
+      return beforeActivated(this);
     }
     return orElse();
   }
 }
 
-abstract class TimerViewStateTimerActivated extends TimerViewState {
-  factory TimerViewStateTimerActivated(
-      {DateTime? startDate,
-      DateTime? endDate,
-      int? duration}) = _$TimerViewStateTimerActivated;
-  TimerViewStateTimerActivated._() : super._();
+abstract class TimerViewStateBeforeActivated extends TimerViewState {
+  factory TimerViewStateBeforeActivated(
+      {required DateTime startDate,
+      int? duration,
+      int? remainedDays}) = _$TimerViewStateBeforeActivated;
+  TimerViewStateBeforeActivated._() : super._();
 
-  DateTime? get startDate => throw _privateConstructorUsedError;
-  DateTime? get endDate => throw _privateConstructorUsedError;
+  DateTime get startDate => throw _privateConstructorUsedError;
   @override
   int? get duration => throw _privateConstructorUsedError;
   @override
+  int? get remainedDays => throw _privateConstructorUsedError;
+  @override
   @JsonKey(ignore: true)
-  $TimerViewStateTimerActivatedCopyWith<TimerViewStateTimerActivated>
+  $TimerViewStateBeforeActivatedCopyWith<TimerViewStateBeforeActivated>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TimerViewStateActivatedCopyWith<$Res>
+    implements $TimerViewStateCopyWith<$Res> {
+  factory $TimerViewStateActivatedCopyWith(TimerViewStateActivated value,
+          $Res Function(TimerViewStateActivated) then) =
+      _$TimerViewStateActivatedCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {DateTime startDate, DateTime endDate, int? duration, int? remainedDays});
+}
+
+/// @nodoc
+class _$TimerViewStateActivatedCopyWithImpl<$Res>
+    extends _$TimerViewStateCopyWithImpl<$Res>
+    implements $TimerViewStateActivatedCopyWith<$Res> {
+  _$TimerViewStateActivatedCopyWithImpl(TimerViewStateActivated _value,
+      $Res Function(TimerViewStateActivated) _then)
+      : super(_value, (v) => _then(v as TimerViewStateActivated));
+
+  @override
+  TimerViewStateActivated get _value => super._value as TimerViewStateActivated;
+
+  @override
+  $Res call({
+    Object? startDate = freezed,
+    Object? endDate = freezed,
+    Object? duration = freezed,
+    Object? remainedDays = freezed,
+  }) {
+    return _then(TimerViewStateActivated(
+      startDate: startDate == freezed
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endDate: endDate == freezed
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TimerViewStateActivated extends TimerViewStateActivated
+    with DiagnosticableTreeMixin {
+  _$TimerViewStateActivated(
+      {required this.startDate,
+      required this.endDate,
+      this.duration = 14,
+      this.remainedDays})
+      : super._();
+
+  @override
+  final DateTime startDate;
+  @override
+  final DateTime endDate;
+  @JsonKey(defaultValue: 14)
+  @override
+  final int? duration;
+  @override
+  final int? remainedDays;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'TimerViewState.activated(startDate: $startDate, endDate: $endDate, duration: $duration, remainedDays: $remainedDays)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'TimerViewState.activated'))
+      ..add(DiagnosticsProperty('startDate', startDate))
+      ..add(DiagnosticsProperty('endDate', endDate))
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is TimerViewStateActivated &&
+            (identical(other.startDate, startDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.startDate, startDate)) &&
+            (identical(other.endDate, endDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.endDate, endDate)) &&
+            (identical(other.duration, duration) ||
+                const DeepCollectionEquality()
+                    .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(startDate) ^
+      const DeepCollectionEquality().hash(endDate) ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays);
+
+  @JsonKey(ignore: true)
+  @override
+  $TimerViewStateActivatedCopyWith<TimerViewStateActivated> get copyWith =>
+      _$TimerViewStateActivatedCopyWithImpl<TimerViewStateActivated>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
+        $default, {
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
+    required TResult Function(
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
+    required TResult Function(DateTime? startDate, DateTime? endDate,
+            int? duration, int? remainedDays, String? error)
+        error,
+  }) {
+    return activated(startDate, endDate, duration, remainedDays);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
+        error,
+    required TResult orElse(),
+  }) {
+    if (activated != null) {
+      return activated(startDate, endDate, duration, remainedDays);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_TimerViewState value) $default, {
+    required TResult Function(TimewViewStateInitial value) initial,
+    required TResult Function(TimerViewStateLoading value) loading,
+    required TResult Function(TimerViewStateDurationSet value) durationSet,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
+    required TResult Function(TimerViewStateError value) error,
+  }) {
+    return activated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_TimerViewState value)? $default, {
+    TResult Function(TimewViewStateInitial value)? initial,
+    TResult Function(TimerViewStateLoading value)? loading,
+    TResult Function(TimerViewStateDurationSet value)? durationSet,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
+    TResult Function(TimerViewStateError value)? error,
+    required TResult orElse(),
+  }) {
+    if (activated != null) {
+      return activated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TimerViewStateActivated extends TimerViewState {
+  factory TimerViewStateActivated(
+      {required DateTime startDate,
+      required DateTime endDate,
+      int? duration,
+      int? remainedDays}) = _$TimerViewStateActivated;
+  TimerViewStateActivated._() : super._();
+
+  DateTime get startDate => throw _privateConstructorUsedError;
+  DateTime get endDate => throw _privateConstructorUsedError;
+  @override
+  int? get duration => throw _privateConstructorUsedError;
+  @override
+  int? get remainedDays => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  $TimerViewStateActivatedCopyWith<TimerViewStateActivated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1030,7 +1408,11 @@ abstract class $TimerViewStateErrorCopyWith<$Res>
       _$TimerViewStateErrorCopyWithImpl<$Res>;
   @override
   $Res call(
-      {DateTime? startDate, DateTime? endDate, int? duration, String? error});
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration,
+      int? remainedDays,
+      String? error});
 }
 
 /// @nodoc
@@ -1049,6 +1431,7 @@ class _$TimerViewStateErrorCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? duration = freezed,
+    Object? remainedDays = freezed,
     Object? error = freezed,
   }) {
     return _then(TimerViewStateError(
@@ -1064,6 +1447,10 @@ class _$TimerViewStateErrorCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
+      remainedDays: remainedDays == freezed
+          ? _value.remainedDays
+          : remainedDays // ignore: cast_nullable_to_non_nullable
+              as int?,
       error: error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -1077,7 +1464,11 @@ class _$TimerViewStateErrorCopyWithImpl<$Res>
 class _$TimerViewStateError extends TimerViewStateError
     with DiagnosticableTreeMixin {
   _$TimerViewStateError(
-      {this.startDate, this.endDate, this.duration = 14, this.error})
+      {this.startDate,
+      this.endDate,
+      this.duration = 14,
+      this.remainedDays,
+      this.error})
       : super._();
 
   @override
@@ -1088,11 +1479,13 @@ class _$TimerViewStateError extends TimerViewStateError
   @override
   final int? duration;
   @override
+  final int? remainedDays;
+  @override
   final String? error;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TimerViewState.error(startDate: $startDate, endDate: $endDate, duration: $duration, error: $error)';
+    return 'TimerViewState.error(startDate: $startDate, endDate: $endDate, duration: $duration, remainedDays: $remainedDays, error: $error)';
   }
 
   @override
@@ -1103,6 +1496,7 @@ class _$TimerViewStateError extends TimerViewStateError
       ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('endDate', endDate))
       ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('remainedDays', remainedDays))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -1119,6 +1513,9 @@ class _$TimerViewStateError extends TimerViewStateError
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
                     .equals(other.duration, duration)) &&
+            (identical(other.remainedDays, remainedDays) ||
+                const DeepCollectionEquality()
+                    .equals(other.remainedDays, remainedDays)) &&
             (identical(other.error, error) ||
                 const DeepCollectionEquality().equals(other.error, error)));
   }
@@ -1129,6 +1526,7 @@ class _$TimerViewStateError extends TimerViewStateError
       const DeepCollectionEquality().hash(startDate) ^
       const DeepCollectionEquality().hash(endDate) ^
       const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(remainedDays) ^
       const DeepCollectionEquality().hash(error);
 
   @JsonKey(ignore: true)
@@ -1139,38 +1537,46 @@ class _$TimerViewStateError extends TimerViewStateError
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays)
         $default, {
-    required TResult Function(int? duration) initial,
-    required TResult Function(int? duration) loading,
-    required TResult Function(int? duration) durationSet,
+    required TResult Function(int? duration, int? remainedDays) initial,
+    required TResult Function(int? duration, int? remainedDays) loading,
+    required TResult Function(int? duration, int? remainedDays) durationSet,
     required TResult Function(
-            DateTime? startDate, DateTime? endDate, int? duration)
-        timerActivated,
+            DateTime startDate, int? duration, int? remainedDays)
+        beforeActivated,
+    required TResult Function(DateTime startDate, DateTime endDate,
+            int? duration, int? remainedDays)
+        activated,
     required TResult Function(DateTime? startDate, DateTime? endDate,
-            int? duration, String? error)
+            int? duration, int? remainedDays, String? error)
         error,
   }) {
-    return error(startDate, endDate, duration, this.error);
+    return error(startDate, endDate, duration, remainedDays, this.error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        $default, {
-    TResult Function(int? duration)? initial,
-    TResult Function(int? duration)? loading,
-    TResult Function(int? duration)? durationSet,
-    TResult Function(DateTime? startDate, DateTime? endDate, int? duration)?
-        timerActivated,
     TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
-            String? error)?
+            int? remainedDays)?
+        $default, {
+    TResult Function(int? duration, int? remainedDays)? initial,
+    TResult Function(int? duration, int? remainedDays)? loading,
+    TResult Function(int? duration, int? remainedDays)? durationSet,
+    TResult Function(DateTime startDate, int? duration, int? remainedDays)?
+        beforeActivated,
+    TResult Function(DateTime startDate, DateTime endDate, int? duration,
+            int? remainedDays)?
+        activated,
+    TResult Function(DateTime? startDate, DateTime? endDate, int? duration,
+            int? remainedDays, String? error)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(startDate, endDate, duration, this.error);
+      return error(startDate, endDate, duration, remainedDays, this.error);
     }
     return orElse();
   }
@@ -1182,8 +1588,9 @@ class _$TimerViewStateError extends TimerViewStateError
     required TResult Function(TimewViewStateInitial value) initial,
     required TResult Function(TimerViewStateLoading value) loading,
     required TResult Function(TimerViewStateDurationSet value) durationSet,
-    required TResult Function(TimerViewStateTimerActivated value)
-        timerActivated,
+    required TResult Function(TimerViewStateBeforeActivated value)
+        beforeActivated,
+    required TResult Function(TimerViewStateActivated value) activated,
     required TResult Function(TimerViewStateError value) error,
   }) {
     return error(this);
@@ -1196,7 +1603,8 @@ class _$TimerViewStateError extends TimerViewStateError
     TResult Function(TimewViewStateInitial value)? initial,
     TResult Function(TimerViewStateLoading value)? loading,
     TResult Function(TimerViewStateDurationSet value)? durationSet,
-    TResult Function(TimerViewStateTimerActivated value)? timerActivated,
+    TResult Function(TimerViewStateBeforeActivated value)? beforeActivated,
+    TResult Function(TimerViewStateActivated value)? activated,
     TResult Function(TimerViewStateError value)? error,
     required TResult orElse(),
   }) {
@@ -1212,6 +1620,7 @@ abstract class TimerViewStateError extends TimerViewState {
       {DateTime? startDate,
       DateTime? endDate,
       int? duration,
+      int? remainedDays,
       String? error}) = _$TimerViewStateError;
   TimerViewStateError._() : super._();
 
@@ -1219,6 +1628,8 @@ abstract class TimerViewStateError extends TimerViewState {
   DateTime? get endDate => throw _privateConstructorUsedError;
   @override
   int? get duration => throw _privateConstructorUsedError;
+  @override
+  int? get remainedDays => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

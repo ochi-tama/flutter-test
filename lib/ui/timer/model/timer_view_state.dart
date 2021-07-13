@@ -19,40 +19,58 @@ class TimerViewState with _$TimerViewState {
     DateTime? startDate,
     DateTime? endDate,
     @Default(14) int? duration,
+    int? remainedDays,
   }) = _TimerViewState;
 
   /// No Doc
   static TimerViewState createTimerViewStateFromResponse(
       DateTime? startDate, DateTime? endDate, int? duration) {
-    if (startDate == null && endDate == null && duration == null) {
-      return TimerViewState.initial();
+    if (startDate != null && endDate != null) {
+      final remainedDays = endDate.difference(DateTime.now()).inDays;
+      return TimerViewState.activated(
+          startDate: startDate,
+          endDate: endDate,
+          duration: duration,
+          remainedDays: remainedDays);
     }
-    return TimerViewState.timerActivated(
-        startDate: startDate, endDate: endDate, duration: duration);
+    if (startDate != null && endDate == null) {
+      return TimerViewState.beforeActivated(
+          startDate: startDate, duration: duration);
+    }
+    return TimerViewState.initial();
   }
 
   /// initial state
-  factory TimerViewState.initial({@Default(14) int? duration}) =
-      TimewViewStateInitial;
+  factory TimerViewState.initial(
+      {@Default(14) int? duration, int? remainedDays}) = TimewViewStateInitial;
 
   /// loading state
-  factory TimerViewState.loading({@Default(14) int? duration}) =
-      TimerViewStateLoading;
+  factory TimerViewState.loading(
+      {@Default(14) int? duration, int? remainedDays}) = TimerViewStateLoading;
 
   /// timer not active
-  factory TimerViewState.durationSet({@Default(14) int? duration}) =
-      TimerViewStateDurationSet;
+  factory TimerViewState.durationSet(
+      {@Default(14) int? duration,
+      int? remainedDays}) = TimerViewStateDurationSet;
 
   /// timer active state
-  factory TimerViewState.timerActivated(
-      {DateTime? startDate,
-      DateTime? endDate,
-      @Default(14) int? duration}) = TimerViewStateTimerActivated;
+  factory TimerViewState.beforeActivated(
+      {required DateTime startDate,
+      @Default(14) int? duration,
+      int? remainedDays}) = TimerViewStateBeforeActivated;
+
+  /// timer active state
+  factory TimerViewState.activated(
+      {required DateTime startDate,
+      required DateTime endDate,
+      @Default(14) int? duration,
+      int? remainedDays}) = TimerViewStateActivated;
 
   /// error state
   factory TimerViewState.error(
       {DateTime? startDate,
       DateTime? endDate,
       @Default(14) int? duration,
+      int? remainedDays,
       String? error}) = TimerViewStateError;
 }

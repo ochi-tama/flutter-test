@@ -11,10 +11,11 @@ class FindPresenterData with _$FindPresenterData {
   const FindPresenterData._();
 
   /// No Doc
-  const factory FindPresenterData(
-      {DateTime? startDate,
-      DateTime? endDate,
-      int? duration}) = _FindPresenterData;
+  const factory FindPresenterData({
+    DateTime? startDate,
+    DateTime? endDate,
+    int? duration,
+  }) = _FindPresenterData;
 
   /// No Doc
   static FindPresenterData fromFindOutputData(FindOutputData findOutputData) {

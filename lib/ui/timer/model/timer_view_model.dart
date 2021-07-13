@@ -9,32 +9,35 @@ import 'timer_view_state.dart';
 class TimerViewModel extends StateNotifier<TimerViewState> {
   /// Constructor
   TimerViewModel(
-      {required FindPresenterData findOutputPresenter,
+      {required FindPresenterData presenterData,
       required WearingTimerController wearingTimerController})
       : _wearingTimerController = wearingTimerController,
         super(TimerViewState.createTimerViewStateFromResponse(
-            findOutputPresenter.startDate,
-            findOutputPresenter.endDate,
-            findOutputPresenter.duration));
+            presenterData.startDate,
+            presenterData.endDate,
+            presenterData.duration));
 
   //final FindOutputPresenter _findOutputPresenter;
   final WearingTimerController _wearingTimerController;
-
-  /// final FindOutputPresenter _findOutputPresenter;
-  void createTimerViewStateFromResponse(
-      DateTime? startDate, DateTime? endDate, int? duration) {
-    if (startDate == null && endDate == null && duration == null) {
-      state = TimerViewState.initial();
-    } else {
-      state = TimerViewState.timerActivated(
-          startDate: startDate, endDate: endDate, duration: duration);
-    }
-  }
 
   /// No Doc
   void setDuration(int? duration) {
     if (duration == null) return;
     state = TimerViewState.durationSet(duration: duration);
+  }
+
+  /// No Doc
+  void updateRemainedDays() {
+    state.maybeWhen((startDate, endDate, duration, remaiedDays) => null,
+        activated: (startDate, endDate, duration, remainedDays) {
+          final remainedDays = endDate.difference(DateTime.now()).inDays;
+          state = TimerViewState.activated(
+              startDate: startDate,
+              endDate: endDate,
+              duration: duration,
+              remainedDays: remainedDays);
+        },
+        orElse: () => null);
   }
 
   void findTimer() async {}

@@ -74,6 +74,6 @@ final timerViewModelProvider =
   final wearingTimerController = ref.read(wearingTimerControllerProvider);
 
   return TimerViewModel(
-      findOutputPresenter: findPresenterData,
+      presenterData: findPresenterData,
       wearingTimerController: wearingTimerController);
 });

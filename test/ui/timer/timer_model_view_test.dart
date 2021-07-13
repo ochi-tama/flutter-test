@@ -53,9 +53,7 @@ void main() {
       await notifier.registerTimer();
 
       /// 時刻を内部で見ているので数値が分からない
-      expect(
-          container.read(timerViewModelProvider)
-              is TimerViewStateTimerActivated,
+      expect(container.read(timerViewModelProvider) is TimerViewStateActivated,
           isTrue);
     });
   });
