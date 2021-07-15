@@ -1,42 +1,52 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:test_app/application/wearing_timer/find/data/find_presenter_data.dart';
 import 'package:test_app/application/wearing_timer/register/register_input_data.dart';
 import 'package:test_app/application/wearing_timer/register/register_interactor.dart';
-import 'package:test_app/application/wearing_timer/register/register_output_data.dart';
-import 'package:test_app/application/wearing_timer/register/register_output_presenter.dart';
-import 'package:test_app/domain/models/wearing_timer/wearing_timer_repository.dart';
+import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
+import 'package:test_app/provider.dart';
 
 import '../../../utils/fake_wearing_timer_repository_impl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  late WearingTimerRepository repository;
-  late RegisterOutputPresenter outputPort;
+  late ProviderContainer container;
   late RegisterInteractor registerInteractor;
-  setUpAll(() {
-    repository = FakeWearingTimerRepositoryImpl();
-    outputPort = RegisterOutputPresenter.initialize();
+  setUp(() {
+    container = ProviderContainer(
+      overrides: [
+        wearingTimerRepositoryProvider.overrideWithProvider(
+            Provider((ref) => FakeWearingTimerRepositoryImpl()))
+      ],
+    );
+    final repository = container.read(wearingTimerRepositoryProvider);
+    final outputPort = container.read(findPresenterProvider);
     registerInteractor = RegisterInteractor(
-        wbRepository: repository, registerOutputPort: outputPort);
-  });
-
-  tearDown(() async {
-    await repository.delete();
-    final initOutputData = RegisterOutputData();
-    outputPort.output(initOutputData);
+        repository: repository, registerOutputPort: outputPort);
   });
 
   test('register interactor saves a WearingTimer to repository', () async {
     final startDate = DateTime(2010, 7, 17);
     final duration = 30;
+    final endDate = startDate.add(Duration(days: duration));
     final registerInputData = RegisterInputData(startDate, duration);
+
+    final initialOutputData = container.read(findPresenterNotifierProvider);
+    expect(initialOutputData, equals(FindPresenterData()));
+
     await registerInteractor.handle(registerInputData);
 
-    final expectedDuration = 30;
-    final expectedStartDate = DateTime(2010, 7, 17);
-    final expectedEndDate = startDate.add(Duration(days: duration));
+    final registerdData =
+        await container.read(wearingTimerRepositoryProvider).find();
+    final expectedRegisteredData = WearingTimer(
+        startDate: startDate, duration: duration, endDate: endDate);
 
-    expect(outputPort.duration, equals(expectedDuration));
-    expect(outputPort.startDate, equals(expectedStartDate));
-    expect(outputPort.endDate, equals(expectedEndDate));
+    expect(registerdData, equals(expectedRegisteredData));
+
+    final expectedResult =
+        FindPresenterData(startDate: startDate, endDate: endDate, duration: 30);
+    final outputData = container.read(findPresenterNotifierProvider);
+
+    expect(outputData, equals(expectedResult));
   });
 }

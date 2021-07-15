@@ -17,11 +17,20 @@ final fakeStartedWearingTimer =
 
 class TestWearingTimerData {
   static final startDate = DateTime(2021, 4, 5);
-  static final endDate = DateTime(2021, 4, 9);
   static final duration = 4;
+  static final endDate = startDate.add(Duration(days: duration));
+
+  static RegisterInputData registerInputData() {
+    return RegisterInputData(startDate, duration);
+  }
 
   static WearingTimer wearingTimerNotStarted() {
     return WearingTimer(startDate: startDate, duration: duration);
+  }
+
+  static WearingTimer wearingTimerStarted() {
+    return WearingTimer(
+        startDate: startDate, endDate: endDate, duration: duration);
   }
 
   static FindOutputData initialFindOutputData() {
