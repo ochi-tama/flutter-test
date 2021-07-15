@@ -17,11 +17,15 @@ class _$FindOutputDataTearOff {
   const _$FindOutputDataTearOff();
 
   _FindOutputData call(
-      {DateTime? startDate, DateTime? endDate, int? duration}) {
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration,
+      String? errorMessages}) {
     return _FindOutputData(
       startDate: startDate,
       endDate: endDate,
       duration: duration,
+      errorMessages: errorMessages,
     );
   }
 }
@@ -34,6 +38,7 @@ mixin _$FindOutputData {
   DateTime? get startDate => throw _privateConstructorUsedError;
   DateTime? get endDate => throw _privateConstructorUsedError;
   int? get duration => throw _privateConstructorUsedError;
+  String? get errorMessages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FindOutputDataCopyWith<FindOutputData> get copyWith =>
@@ -45,7 +50,11 @@ abstract class $FindOutputDataCopyWith<$Res> {
   factory $FindOutputDataCopyWith(
           FindOutputData value, $Res Function(FindOutputData) then) =
       _$FindOutputDataCopyWithImpl<$Res>;
-  $Res call({DateTime? startDate, DateTime? endDate, int? duration});
+  $Res call(
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration,
+      String? errorMessages});
 }
 
 /// @nodoc
@@ -62,6 +71,7 @@ class _$FindOutputDataCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? duration = freezed,
+    Object? errorMessages = freezed,
   }) {
     return _then(_value.copyWith(
       startDate: startDate == freezed
@@ -76,6 +86,10 @@ class _$FindOutputDataCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
+      errorMessages: errorMessages == freezed
+          ? _value.errorMessages
+          : errorMessages // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -87,7 +101,11 @@ abstract class _$FindOutputDataCopyWith<$Res>
           _FindOutputData value, $Res Function(_FindOutputData) then) =
       __$FindOutputDataCopyWithImpl<$Res>;
   @override
-  $Res call({DateTime? startDate, DateTime? endDate, int? duration});
+  $Res call(
+      {DateTime? startDate,
+      DateTime? endDate,
+      int? duration,
+      String? errorMessages});
 }
 
 /// @nodoc
@@ -106,6 +124,7 @@ class __$FindOutputDataCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? endDate = freezed,
     Object? duration = freezed,
+    Object? errorMessages = freezed,
   }) {
     return _then(_FindOutputData(
       startDate: startDate == freezed
@@ -120,6 +139,10 @@ class __$FindOutputDataCopyWithImpl<$Res>
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
+      errorMessages: errorMessages == freezed
+          ? _value.errorMessages
+          : errorMessages // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -127,7 +150,8 @@ class __$FindOutputDataCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_FindOutputData extends _FindOutputData with DiagnosticableTreeMixin {
-  const _$_FindOutputData({this.startDate, this.endDate, this.duration})
+  const _$_FindOutputData(
+      {this.startDate, this.endDate, this.duration, this.errorMessages})
       : super._();
 
   @override
@@ -136,10 +160,12 @@ class _$_FindOutputData extends _FindOutputData with DiagnosticableTreeMixin {
   final DateTime? endDate;
   @override
   final int? duration;
+  @override
+  final String? errorMessages;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'FindOutputData(startDate: $startDate, endDate: $endDate, duration: $duration)';
+    return 'FindOutputData(startDate: $startDate, endDate: $endDate, duration: $duration, errorMessages: $errorMessages)';
   }
 
   @override
@@ -149,7 +175,8 @@ class _$_FindOutputData extends _FindOutputData with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'FindOutputData'))
       ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('endDate', endDate))
-      ..add(DiagnosticsProperty('duration', duration));
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('errorMessages', errorMessages));
   }
 
   @override
@@ -164,7 +191,10 @@ class _$_FindOutputData extends _FindOutputData with DiagnosticableTreeMixin {
                     .equals(other.endDate, endDate)) &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
-                    .equals(other.duration, duration)));
+                    .equals(other.duration, duration)) &&
+            (identical(other.errorMessages, errorMessages) ||
+                const DeepCollectionEquality()
+                    .equals(other.errorMessages, errorMessages)));
   }
 
   @override
@@ -172,7 +202,8 @@ class _$_FindOutputData extends _FindOutputData with DiagnosticableTreeMixin {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(startDate) ^
       const DeepCollectionEquality().hash(endDate) ^
-      const DeepCollectionEquality().hash(duration);
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(errorMessages);
 
   @JsonKey(ignore: true)
   @override
@@ -184,7 +215,8 @@ abstract class _FindOutputData extends FindOutputData {
   const factory _FindOutputData(
       {DateTime? startDate,
       DateTime? endDate,
-      int? duration}) = _$_FindOutputData;
+      int? duration,
+      String? errorMessages}) = _$_FindOutputData;
   const _FindOutputData._() : super._();
 
   @override
@@ -193,6 +225,8 @@ abstract class _FindOutputData extends FindOutputData {
   DateTime? get endDate => throw _privateConstructorUsedError;
   @override
   int? get duration => throw _privateConstructorUsedError;
+  @override
+  String? get errorMessages => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$FindOutputDataCopyWith<_FindOutputData> get copyWith =>

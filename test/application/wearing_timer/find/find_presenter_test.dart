@@ -25,6 +25,7 @@ void main() {
               TestWearingTimerData.findPresenterDataFilledWithAllParameters()));
     });
 
+    /*
     test('no values are updated, given empty(invalid) inputs ', () {
       final container = ProviderContainer();
       final findPresenter =
@@ -35,5 +36,6 @@ void main() {
       expect(container.read(findPresenterNotifierProvider),
           equals(TestWearingTimerData.initialFindPresenterData()));
     });
+    */
   });
 }

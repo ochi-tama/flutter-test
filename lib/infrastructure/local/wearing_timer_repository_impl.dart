@@ -30,10 +30,15 @@ class WearingTimerRepositoryImpl implements WearingTimerRepository {
   @override
   Future<bool> delete() async {
     // confirm repository has data;
-    final existingKey = (await _dataSource.getInstance()).getKeys();
-    if (existingKey.isNotEmpty) {
-      return (await _dataSource.remove("wearingTimer"));
+    try {
+      final existingKey = (await _dataSource.getInstance()).getKeys();
+      if (existingKey.isNotEmpty) {
+        return (await _dataSource.remove("wearingTimer"));
+      }
+      return true;
+    } on Exception catch (e) {
+      print(e);
+      return false;
     }
-    return true;
   }
 }

@@ -16,7 +16,8 @@ class FindOutputData with _$FindOutputData {
   const factory FindOutputData(
       {DateTime? startDate,
       DateTime? endDate,
-      int? duration}) = _FindOutputData;
+      int? duration,
+      String? errorMessages}) = _FindOutputData;
 
   /// No Doc
   static FindOutputData fromWearingTimer(WearingTimer? wearingTimer) {
@@ -24,5 +25,10 @@ class FindOutputData with _$FindOutputData {
         startDate: wearingTimer?.startDate,
         endDate: wearingTimer?.endDate,
         duration: wearingTimer?.duration);
+  }
+
+  /// No Doc
+  static FindOutputData initial() {
+    return FindOutputData();
   }
 }

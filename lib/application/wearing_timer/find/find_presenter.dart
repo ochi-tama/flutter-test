@@ -10,10 +10,7 @@ class FindPresenter extends FindOutputPort {
   final FindPresenterNotifier _notifier;
 
   void output(FindOutputData outputData) {
-    /// TODO: バリデーション用の関数を作る
-    if (outputData.duration == null || outputData.startDate == null) {
-      return;
-    }
+    /// TODO: ここで更新しない場合を決める？
     _notifier.update(outputData);
   }
 }
