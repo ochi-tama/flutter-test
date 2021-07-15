@@ -1,4 +1,6 @@
 import 'package:riverpod/riverpod.dart';
+import 'package:test_app/application/wearing_timer/cancel/cancel_interactor.dart';
+import 'package:test_app/application/wearing_timer/cancel/interface/cancel_input_port.dart';
 
 import 'application/wearing_timer/find/data/find_presenter_data.dart';
 import 'application/wearing_timer/find/find_input_port.dart';
@@ -53,18 +55,29 @@ final registerOutputPresenterProvider = Provider<RegisterOutputPresenter>(
 /// No Doc
 final registerInteractorProvider = Provider<RegisterInputPort>((ref) {
   final wearingTimerRepository = ref.read(wearingTimerRepositoryProvider);
-  final registerOutputPort = ref.read(registerOutputPresenterProvider);
+  final registerOutputPort = ref.read(findPresenterProvider);
   return RegisterInteractor(
-      wbRepository: wearingTimerRepository,
+      repository: wearingTimerRepository,
       registerOutputPort: registerOutputPort);
+});
+
+/// No Doc
+final cancelInteractorProvider = Provider<CancelInputPort>((ref) {
+  final wearingTimerRepository = ref.read(wearingTimerRepositoryProvider);
+  final findOutputPort = ref.read(findPresenterProvider);
+  return CancelInteractor(
+      repository: wearingTimerRepository, findOutputPort: findOutputPort);
 });
 
 /// No Doc
 final wearingTimerControllerProvider = Provider<WearingTimerController>((ref) {
   final findInputPort = ref.read(findInteractorProvider);
   final registerInputPort = ref.read(registerInteractorProvider);
+  final cancelInputPort = ref.read(cancelInteractorProvider);
   return WearingTimerController(
-      findInputPort: findInputPort, registerInputPort: registerInputPort);
+      findInputPort: findInputPort,
+      registerInputPort: registerInputPort,
+      cancelInputPort: cancelInputPort);
 });
 
 /// No Doc
@@ -72,7 +85,6 @@ final timerViewModelProvider =
     StateNotifierProvider<TimerViewModel, TimerViewState>((ref) {
   final findPresenterData = ref.watch(findPresenterNotifierProvider);
   final wearingTimerController = ref.read(wearingTimerControllerProvider);
-
   return TimerViewModel(
       presenterData: findPresenterData,
       wearingTimerController: wearingTimerController);

@@ -40,7 +40,10 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
         orElse: () => null);
   }
 
-  void findTimer() async {}
+  /// No Doc
+  Future<void> cancelTimer() async {
+    await _wearingTimerController.cancelWearingTimer();
+  }
 
   /// register timer handler
   Future<void> registerTimer() async {
@@ -52,6 +55,5 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
 
     /// TODO: 実行タイミングで調整する
     await _wearingTimerController.registerWearingTimer(registerInputData);
-    await _wearingTimerController.findWearingTimer();
   }
 }

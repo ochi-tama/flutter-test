@@ -103,4 +103,18 @@ void main() {
       expect(startTimer.endTimer, throwsA(((e) => e is Exception)));
     });
   });
+
+  group('Wearing timer Unit test - cancelTimer', () {
+    /*
+    test('Cancel fuction initializes startDate & endDate', () {
+      final initalTimer =
+          TestWearingTimerData.wearingTimerNotStarted().startTimer();
+      final canceledTimer = initalTimer.cancelTimer();
+
+      expect(canceledTimer.startDate, initalTimer.startDate);
+      expect(canceledTimer.endDate, isNull);
+      expect(canceledTimer.duration, initalTimer.duration);
+    });
+    */
+  });
 }
