@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'history.dart';
-import 'timer.dart';
-import 'package:test_app/home.dart';
 
+import 'ui/history.dart';
+import 'ui/home.dart';
+import 'ui/timer/timer.dart';
+
+/// Indexed Stack
 class IndexedStackBar extends StatefulWidget {
+  /// Indexed Stack用のID
   static String id = 'indexed_stack_bar';
 
   @override
@@ -51,7 +54,7 @@ class _IndexedStackBarState extends State<IndexedStackBar> {
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
           // onTap: _onItemTapped,
-          onTap: (int index) {
+          onTap: (index) {
             setState(() {
               _selectedIndex = index;
             });
