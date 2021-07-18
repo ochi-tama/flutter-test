@@ -41,4 +41,11 @@ class WearingTimer with _$WearingTimer {
     }
     return copyWith(actualEndDate: DateTime.now());
   }
+
+  /// No Doc
+  /*
+  WearingTimer cancelTimer() {
+    return copyWith(actualEndDate: null, endDate: null);
+  }
+  */
 }

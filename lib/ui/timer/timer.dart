@@ -25,8 +25,11 @@ class TimerPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final remainedDays =
         ref.watch(timerViewModelProvider.select((value) => value.remainedDays));
+    final notifier = ref.read(timerViewModelProvider.notifier);
     useEffect(() {
-      Future.microtask(() async {});
+      Future.microtask(() async {
+        notifier.findTimer();
+      });
     }, const []);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

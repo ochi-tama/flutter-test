@@ -4,28 +4,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:test_app/provider.dart';
 import 'package:test_app/ui/timer/model/timer_view_state.dart';
 
+import '../../utils/data/fake_wearing_timer.dart';
 import '../../utils/fake_wearing_timer_repository_impl.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  setUpAll(() {
-    const MethodChannel('plugins.flutter.io/shared_preferences')
-        .setMockMethodCallHandler((methodCall) async {
-      if (methodCall.method == 'getAll') {
-        return <String, dynamic>{}; // set initial values here if desired
-      }
-      return null;
-    });
+  late ProviderContainer container;
+  setUp(() {
+    container = ProviderContainer(overrides: [
+      wearingTimerRepositoryProvider.overrideWithProvider(
+          Provider((ref) => FakeWearingTimerRepositoryImpl()))
+    ]);
   });
   group("timer model view test", () {
-    late ProviderContainer container;
-    setUp(() {
-      container = ProviderContainer(overrides: [
-        wearingTimerRepositoryProvider.overrideWithProvider(
-            Provider((ref) => FakeWearingTimerRepositoryImpl()))
-      ]);
-    });
-
     test("timer model view initiaize state", () {
       final timerModelState = container.read(timerViewModelProvider);
       expect(timerModelState, TimerViewState.initial());
@@ -55,6 +46,39 @@ void main() {
       /// 時刻を内部で見ているので数値が分からない
       expect(container.read(timerViewModelProvider) is TimerViewStateActivated,
           isTrue);
+    });
+  });
+
+  group("find timer fuction", () {
+    test("timer model view find timer by notifier", () async {
+      final notifier = container.read(timerViewModelProvider.notifier);
+
+      expect(container.read(timerViewModelProvider),
+          equals(TimerViewState.initial()));
+
+      await notifier.findTimer();
+
+      /// 時刻を内部で見ているので数値が分からない
+      expect(container.read(timerViewModelProvider),
+          equals(TimerViewState.initial()));
+    });
+
+    test("timer model view find timer by notifier", () async {
+      final notifier = container.read(timerViewModelProvider.notifier);
+
+      expect(container.read(timerViewModelProvider),
+          equals(TimerViewState.initial()));
+
+      final testData = TestWearingTimerData.wearingTimerStarted();
+      await container.read(wearingTimerRepositoryProvider).save(testData);
+
+      await notifier.findTimer();
+
+      final expectedState = TimerViewState.createTimerViewStateFromResponse(
+          testData.startDate, testData.endDate, testData.duration);
+
+      /// 時刻を内部で見ているので数値が分からない
+      expect(container.read(timerViewModelProvider), equals(expectedState));
     });
   });
 }

@@ -46,10 +46,10 @@ class TimerButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isTimerActivated = ref.watch(isTimerActivatedProvider);
-    final handler = ref.read(timerViewModelProvider.notifier).registerTimer;
+    final notifier = ref.read(timerViewModelProvider.notifier);
     if (isTimerActivated) {
-      return ElevatedButton(onPressed: () => print(123), child: Text("停止"));
+      return ElevatedButton(onPressed: notifier.cancelTimer, child: Text("停止"));
     }
-    return ElevatedButton(onPressed: handler, child: Text("開始"));
+    return ElevatedButton(onPressed: notifier.registerTimer, child: Text("開始"));
   }
 }

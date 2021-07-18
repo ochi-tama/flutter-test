@@ -27,6 +27,11 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
   }
 
   /// No Doc
+  Future<void> findTimer() async {
+    await _wearingTimerController.findWearingTimer();
+  }
+
+  /// No Doc
   void updateRemainedDays() {
     state.maybeWhen((startDate, endDate, duration, remaiedDays) => null,
         activated: (startDate, endDate, duration, remainedDays) {
