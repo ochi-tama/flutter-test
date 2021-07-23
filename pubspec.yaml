@@ -27,12 +27,14 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   shared_preferences: ^2.0.5
+  flutter_local_notifications: ^6.0.0
   http:  ^0.13.0
   flutter_hooks: ^0.17.0
   hooks_riverpod: ^1.0.0-dev.2
   enum_to_string: ^2.0.0-nullsafety.1
   json_serializable: ^4.0.2
   freezed_annotation: ^0.14.0
+  flutter_native_timezone: ^2.0.0
   uuid:
 
   # The following adds the Cupertino Icons font to your application.
