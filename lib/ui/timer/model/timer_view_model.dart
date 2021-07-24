@@ -3,6 +3,7 @@ import 'package:riverpod/riverpod.dart';
 import '../../../application/wearing_timer/find/data/find_presenter_data.dart';
 import '../../../application/wearing_timer/register/register_input_data.dart';
 import '../../../application/wearing_timer/wearing_timer_controller.dart';
+import '../../../utils/notification_plugin.dart';
 import 'timer_view_state.dart';
 
 /// TimerViewModel
@@ -10,15 +11,17 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
   /// Constructor
   TimerViewModel(
       {required FindPresenterData presenterData,
-      required WearingTimerController wearingTimerController})
+      required WearingTimerController wearingTimerController,
+      NotificationPlugin? notificationPlugin})
       : _wearingTimerController = wearingTimerController,
+        _plugin = notificationPlugin,
         super(TimerViewState.createTimerViewStateFromResponse(
             presenterData.startDate,
             presenterData.endDate,
             presenterData.duration));
 
-  //final FindOutputPresenter _findOutputPresenter;
   final WearingTimerController _wearingTimerController;
+  final NotificationPlugin? _plugin;
 
   /// No Doc
   void setDuration(int? duration) {
@@ -50,7 +53,7 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
     await _wearingTimerController.cancelWearingTimer();
   }
 
-  /// register timer handler
+  /// register timer & set notification
   Future<void> registerTimer() async {
     final duration = state.duration;
     if (duration == null) return;
@@ -58,7 +61,7 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
     final startDate = DateTime.now();
     final registerInputData = RegisterInputData(startDate, duration);
 
-    /// TODO: 実行タイミングで調整する
     await _wearingTimerController.registerWearingTimer(registerInputData);
+    _plugin?.zonedScheduleNotification(startDate, duration);
   }
 }

@@ -12,8 +12,7 @@ class TimerPage extends HookConsumerWidget {
   /// Indexed Stack用のID
   static String id = "timer_page";
 
-  /// TODO: メニュー選択のたびに初期化されるバグ
-  String displayRemainedDays(int? days) {
+  String _displayRemainedDays(int? days) {
     if (days == null) {
       return "未登録";
     } else {
@@ -36,7 +35,7 @@ class TimerPage extends HookConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          displayRemainedDays(remainedDays),
+          _displayRemainedDays(remainedDays),
           style: Theme.of(context).textTheme.headline2,
         ),
         DurationMenu(),

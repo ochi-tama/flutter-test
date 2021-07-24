@@ -1,7 +1,7 @@
 import 'package:riverpod/riverpod.dart';
-import 'package:test_app/application/wearing_timer/cancel/cancel_interactor.dart';
-import 'package:test_app/application/wearing_timer/cancel/interface/cancel_input_port.dart';
 
+import 'application/wearing_timer/cancel/cancel_interactor.dart';
+import 'application/wearing_timer/cancel/interface/cancel_input_port.dart';
 import 'application/wearing_timer/find/data/find_presenter_data.dart';
 import 'application/wearing_timer/find/find_input_port.dart';
 import 'application/wearing_timer/find/find_interactor.dart';
@@ -17,6 +17,12 @@ import 'domain/models/wearing_timer/wearing_timer_repository.dart';
 import 'infrastructure/local/wearing_timer_repository_impl.dart';
 import 'ui/timer/model/timer_view_model.dart';
 import 'ui/timer/model/timer_view_state.dart';
+import 'utils/local_notification.dart';
+import 'utils/notification_plugin.dart';
+
+/// No Doc
+final localNotificationProvider =
+    Provider<NotificationPlugin>((ref) => LocalNotification());
 
 /// No Doc
 final appSharedPreferencesProvider =
@@ -85,7 +91,9 @@ final timerViewModelProvider =
     StateNotifierProvider<TimerViewModel, TimerViewState>((ref) {
   final findPresenterData = ref.watch(findPresenterNotifierProvider);
   final wearingTimerController = ref.read(wearingTimerControllerProvider);
+  final notificationPlugin = ref.read(localNotificationProvider);
   return TimerViewModel(
       presenterData: findPresenterData,
-      wearingTimerController: wearingTimerController);
+      wearingTimerController: wearingTimerController,
+      notificationPlugin: notificationPlugin);
 });
