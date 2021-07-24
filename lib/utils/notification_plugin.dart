@@ -9,5 +9,8 @@ abstract class NotificationPlugin {
   Future<void> showNotification();
 
   /// No Doc
+  Future<void> cancelNotification();
+
+  /// No Doc
   Future<void> zonedScheduleNotification(DateTime startDate, int days);
 }

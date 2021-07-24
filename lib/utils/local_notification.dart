@@ -42,11 +42,17 @@ class LocalNotification extends NotificationPlugin {
   }
 
   /// No Doc
+  Future<void> cancelNotification() async {
+    await _plugin.cancel(1);
+  }
+
+  /// No Doc
   Future<void> zonedScheduleNotification(DateTime startDate, int days) async {
-    //final scheduledDate =
-    //    tz.TZDateTime.from(startDate, tz.local).add(Duration(days: days));
     final scheduledDate =
-        tz.TZDateTime.from(startDate, tz.local).add(Duration(seconds: 5));
+        tz.TZDateTime.from(startDate, tz.local).add(Duration(days: days));
+
+    //final scheduledDate =
+    //    tz.TZDateTime.from(startDate, tz.local).add(Duration(seconds: 5));
     await _plugin.zonedSchedule(
         1, '装着期限アラート', '装着期限です。', scheduledDate, _defaultNotificationDetails,
         androidAllowWhileIdle: true,
