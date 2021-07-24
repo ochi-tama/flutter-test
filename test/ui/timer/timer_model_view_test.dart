@@ -1,10 +1,10 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:test_app/provider.dart';
 import 'package:test_app/ui/timer/model/timer_view_state.dart';
 
 import '../../utils/data/fake_wearing_timer.dart';
+import '../../utils/fake_local_notification.dart';
 import '../../utils/fake_wearing_timer_repository_impl.dart';
 
 void main() {
@@ -13,7 +13,9 @@ void main() {
   setUp(() {
     container = ProviderContainer(overrides: [
       wearingTimerRepositoryProvider.overrideWithProvider(
-          Provider((ref) => FakeWearingTimerRepositoryImpl()))
+          Provider((ref) => FakeWearingTimerRepositoryImpl())),
+      localNotificationProvider
+          .overrideWithProvider(Provider((ref) => FakeLocalNotification()))
     ]);
   });
   group("timer model view test", () {
