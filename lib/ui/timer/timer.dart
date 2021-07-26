@@ -12,6 +12,9 @@ class TimerPage extends HookConsumerWidget {
   /// Indexed Stack用のID
   static String id = "timer_page";
 
+  /// No Doc
+  const TimerPage({Key? key}) : super(key: key);
+
   String _displayRemainedDays(int? days) {
     if (days == null) {
       return "未登録";
