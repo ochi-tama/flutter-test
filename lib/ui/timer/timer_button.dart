@@ -13,6 +13,9 @@ final isTimerActivatedProvider = Provider<bool>((ref) {
 /// No Doc
 class TimerButton extends HookConsumerWidget {
   /// No Doc
+  const TimerButton({Key? key}) : super(key: key);
+
+  /// No Doc
   Widget buildStartButton(BuildContext context) {
     return Container(
       child: FloatingActionButton(
