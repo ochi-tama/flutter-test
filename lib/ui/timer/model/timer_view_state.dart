@@ -26,7 +26,7 @@ class TimerViewState with _$TimerViewState {
   static TimerViewState createTimerViewStateFromResponse(
       DateTime? startDate, DateTime? endDate, int? duration) {
     if (startDate != null && endDate != null) {
-      final remainedDays = endDate.difference(DateTime.now()).inDays;
+      final remainedDays = endDate.difference(startDate).inDays;
       return TimerViewState.activated(
           startDate: startDate,
           endDate: endDate,
