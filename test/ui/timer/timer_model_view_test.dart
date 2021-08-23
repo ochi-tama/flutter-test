@@ -75,9 +75,8 @@ void main() {
       await container.read(wearingTimerRepositoryProvider).save(testData);
 
       await notifier.findTimer();
-
-      final expectedState = TimerViewState.createTimerViewStateFromResponse(
-          testData.startDate, testData.endDate, testData.duration);
+      final expectedState = TimerViewState.createStateFromResponse(
+          TestWearingTimerData.findPresenterDataFilledWithAllParameters());
 
       /// 時刻を内部で見ているので数値が分からない
       expect(container.read(timerViewModelProvider), equals(expectedState));

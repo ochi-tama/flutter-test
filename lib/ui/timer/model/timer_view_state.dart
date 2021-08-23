@@ -1,5 +1,7 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../application/wearing_timer/find/data/find_presenter_data.dart';
 
 part 'timer_view_state.freezed.dart';
 
@@ -23,8 +25,11 @@ class TimerViewState with _$TimerViewState {
   }) = _TimerViewState;
 
   /// No Doc
-  static TimerViewState createTimerViewStateFromResponse(
-      DateTime? startDate, DateTime? endDate, int? duration) {
+  static TimerViewState createStateFromResponse(FindPresenterData data) {
+    final startDate = data.startDate;
+    final endDate = data.endDate;
+    final duration = data.duration;
+
     if (startDate != null && endDate != null) {
       final remainedDays = endDate.difference(startDate).inDays;
       return TimerViewState.activated(
@@ -37,6 +42,7 @@ class TimerViewState with _$TimerViewState {
       return TimerViewState.beforeActivated(
           startDate: startDate, duration: duration);
     }
+
     return TimerViewState.initial();
   }
 

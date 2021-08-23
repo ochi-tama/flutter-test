@@ -3,35 +3,40 @@ import 'package:riverpod/riverpod.dart';
 import '../../../application/wearing_timer/find/data/find_presenter_data.dart';
 import '../../../application/wearing_timer/register/register_input_data.dart';
 import '../../../application/wearing_timer/wearing_timer_controller.dart';
+import '../../../provider.dart';
 import '../../../utils/notification_plugin.dart';
 import 'timer_view_state.dart';
 
 /// TimerViewModel
 class TimerViewModel extends StateNotifier<TimerViewState> {
   /// Constructor
-  TimerViewModel(
-      {required FindPresenterData presenterData,
-      required WearingTimerController wearingTimerController,
-      NotificationPlugin? notificationPlugin})
-      : _wearingTimerController = wearingTimerController,
-        _plugin = notificationPlugin,
-        super(TimerViewState.createTimerViewStateFromResponse(
-            presenterData.startDate,
-            presenterData.endDate,
-            presenterData.duration));
+  TimerViewModel({required ProviderRefBase ref})
+      : _ref = ref,
+        _wearingTimerController = ref.read(wearingTimerControllerProvider),
+        _plugin = ref.read(localNotificationProvider),
+        super(TimerViewState.createStateFromResponse(
+            ref.read(findPresenterNotifierProvider)));
 
+  final ProviderRefBase _ref;
   final WearingTimerController _wearingTimerController;
-  final NotificationPlugin? _plugin;
+  final NotificationPlugin _plugin;
+
+  FindPresenterData _readDateFromProvider() {
+    return _ref.read(findPresenterNotifierProvider);
+  }
 
   /// No Doc
   void setDuration(int? duration) {
     if (duration == null) return;
     state = TimerViewState.durationSet(duration: duration);
+    print("set Duration");
+    return;
   }
 
   /// No Doc
   Future<void> findTimer() async {
     await _wearingTimerController.findWearingTimer();
+    state = TimerViewState.createStateFromResponse(_readDateFromProvider());
   }
 
   /// No Doc
@@ -51,7 +56,8 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
   /// No Doc
   Future<void> cancelTimer() async {
     await _wearingTimerController.cancelWearingTimer();
-    _plugin?.cancelNotification();
+    _plugin.cancelNotification();
+    state = TimerViewState.createStateFromResponse(_readDateFromProvider());
   }
 
   /// register timer & set notification
@@ -63,6 +69,7 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
     final registerInputData = RegisterInputData(startDate, duration);
 
     await _wearingTimerController.registerWearingTimer(registerInputData);
-    _plugin?.zonedScheduleNotification(startDate, duration);
+    state = TimerViewState.createStateFromResponse(_readDateFromProvider());
+    _plugin.zonedScheduleNotification(startDate, duration);
   }
 }

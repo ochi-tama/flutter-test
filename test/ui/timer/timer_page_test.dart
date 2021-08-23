@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_app/application/wearing_timer/wearing_timer_controller.dart';
+import 'package:test_app/application/wearing_timer/find/find_presenter_notifier.dart';
 import 'package:test_app/provider.dart';
-import 'package:test_app/ui/timer/model/timer_view_model.dart';
 import 'package:test_app/ui/timer/timer.dart';
 
 import '../../utils/data/fake_wearing_timer.dart';
@@ -42,16 +39,16 @@ void main() {
         'Then timer page displays 未登録', (tester) async {
       await tester.pumpWidget(ProviderScope(
           overrides: [
-            wearingTimerRepositoryProvider.overrideWithProvider(
-                Provider((ref) => FakeWearingTimerRepositoryImpl())),
+            wearingTimerRepositoryProvider.overrideWithProvider(Provider(
+                (ref) => FakeWearingTimerRepositoryImpl(
+                    wearingTimer:
+                        TestWearingTimerData.wearingTimerNotStarted()))),
             localNotificationProvider.overrideWithProvider(
                 Provider((ref) => FakeLocalNotification())),
-
-            /// TimerActivated state
-            timerViewModelProvider.overrideWithValue(TimerViewModel(
-                presenterData: TestWearingTimerData
-                    .findPresenterDataFilledWithAllParameters(),
-                wearingTimerController: WearingTimerController())),
+            findPresenterNotifierProvider.overrideWithValue(
+                FindPresenterNotifier(
+                    data: TestWearingTimerData
+                        .findPresenterDataFilledWithAllParameters())),
           ],
           child: Directionality(
               textDirection: TextDirection.ltr,
