@@ -22,10 +22,10 @@ void main() {
               Provider((ref) => FakeWearingTimerRepositoryImpl()))
         ],
       );
-      final notifier = container.read(findPresenterNotifierProvider.notifier);
       final repository = container.read(wearingTimerRepositoryProvider);
+      final outputPort = container.read(findPresenterNotifierProvider.notifier);
       findInteractor =
-          FindInteractor(wbRepository: repository, findOutputPort: notifier);
+          FindInteractor(wbRepository: repository, findOutputPort: outputPort);
     });
 
     test('find method return a weaing timer object from repository', () async {
