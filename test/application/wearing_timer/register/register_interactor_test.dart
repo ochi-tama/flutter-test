@@ -20,7 +20,7 @@ void main() {
       ],
     );
     final repository = container.read(wearingTimerRepositoryProvider);
-    final outputPort = container.read(findPresenterProvider);
+    final outputPort = container.read(findPresenterNotifierProvider.notifier);
     registerInteractor = RegisterInteractor(
         repository: repository, registerOutputPort: outputPort);
   });

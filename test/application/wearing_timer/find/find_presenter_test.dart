@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_app/application/wearing_timer/find/find_presenter.dart';
 import 'package:test_app/provider.dart';
 
 import '../../../utils/data/fake_wearing_timer.dart';
@@ -10,7 +9,7 @@ void main() {
     test('output function updates the values of find output notifier', () {
       final container = ProviderContainer();
       final findPresenter =
-          FindPresenter(container.read(findPresenterNotifierProvider.notifier));
+          container.read(findPresenterNotifierProvider.notifier);
 
       expect(container.read(findPresenterNotifierProvider),
           equals(TestWearingTimerData.initialFindPresenterData()));

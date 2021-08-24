@@ -5,8 +5,6 @@ import 'application/wearing_timer/cancel/interface/cancel_input_port.dart';
 import 'application/wearing_timer/find/data/find_presenter_data.dart';
 import 'application/wearing_timer/find/find_input_port.dart';
 import 'application/wearing_timer/find/find_interactor.dart';
-import 'application/wearing_timer/find/find_output_port.dart';
-import 'application/wearing_timer/find/find_presenter.dart';
 import 'application/wearing_timer/find/find_presenter_notifier.dart';
 import 'application/wearing_timer/register/register_input_port.dart';
 import 'application/wearing_timer/register/register_interactor.dart';
@@ -40,16 +38,9 @@ final findPresenterNotifierProvider =
         (ref) => FindPresenterNotifier());
 
 /// No Doc
-final findPresenterProvider = Provider<FindOutputPort>((ref) {
-  final findPresenterNotifier =
-      ref.read(findPresenterNotifierProvider.notifier);
-  return FindPresenter(findPresenterNotifier);
-});
-
-/// No Doc
 final findInteractorProvider = Provider<FindInputPort>((ref) {
   final wearingTimerRepository = ref.read(wearingTimerRepositoryProvider);
-  final findOutputPort = ref.read(findPresenterProvider);
+  final findOutputPort = ref.read(findPresenterNotifierProvider.notifier);
   return FindInteractor(
       wbRepository: wearingTimerRepository, findOutputPort: findOutputPort);
 });
@@ -61,7 +52,7 @@ final registerOutputPresenterProvider = Provider<RegisterOutputPresenter>(
 /// No Doc
 final registerInteractorProvider = Provider<RegisterInputPort>((ref) {
   final wearingTimerRepository = ref.read(wearingTimerRepositoryProvider);
-  final registerOutputPort = ref.read(findPresenterProvider);
+  final registerOutputPort = ref.read(findPresenterNotifierProvider.notifier);
   return RegisterInteractor(
       repository: wearingTimerRepository,
       registerOutputPort: registerOutputPort);
@@ -70,7 +61,7 @@ final registerInteractorProvider = Provider<RegisterInputPort>((ref) {
 /// No Doc
 final cancelInteractorProvider = Provider<CancelInputPort>((ref) {
   final wearingTimerRepository = ref.read(wearingTimerRepositoryProvider);
-  final findOutputPort = ref.read(findPresenterProvider);
+  final findOutputPort = ref.read(findPresenterNotifierProvider.notifier);
   return CancelInteractor(
       repository: wearingTimerRepository, findOutputPort: findOutputPort);
 });

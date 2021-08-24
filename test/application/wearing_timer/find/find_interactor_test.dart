@@ -1,8 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_app/application/wearing_timer/find/find_interactor.dart';
-import 'package:test_app/application/wearing_timer/find/find_presenter.dart';
 import 'package:test_app/application/wearing_timer/find/data/find_presenter_data.dart';
+import 'package:test_app/application/wearing_timer/find/find_interactor.dart';
 import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
 import 'package:test_app/provider.dart';
 
@@ -25,9 +24,8 @@ void main() {
       );
       final notifier = container.read(findPresenterNotifierProvider.notifier);
       final repository = container.read(wearingTimerRepositoryProvider);
-      final outputPort = FindPresenter(notifier);
       findInteractor =
-          FindInteractor(wbRepository: repository, findOutputPort: outputPort);
+          FindInteractor(wbRepository: repository, findOutputPort: notifier);
     });
 
     test('find method return a weaing timer object from repository', () async {
