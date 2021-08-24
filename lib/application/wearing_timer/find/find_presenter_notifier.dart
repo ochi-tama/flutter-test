@@ -6,7 +6,8 @@ import './data/find_presenter_data.dart';
 /// No Doc
 class FindPresenterNotifier extends StateNotifier<FindPresenterData> {
   /// No Doc
-  FindPresenterNotifier() : super(FindPresenterData());
+  FindPresenterNotifier({FindPresenterData data = const FindPresenterData()})
+      : super(data);
 
   /// No Doc
   void update(FindOutputData findOutputData) {

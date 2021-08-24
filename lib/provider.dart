@@ -88,12 +88,5 @@ final wearingTimerControllerProvider = Provider<WearingTimerController>((ref) {
 
 /// No Doc
 final timerViewModelProvider =
-    StateNotifierProvider<TimerViewModel, TimerViewState>((ref) {
-  final findPresenterData = ref.watch(findPresenterNotifierProvider);
-  final wearingTimerController = ref.read(wearingTimerControllerProvider);
-  final notificationPlugin = ref.read(localNotificationProvider);
-  return TimerViewModel(
-      presenterData: findPresenterData,
-      wearingTimerController: wearingTimerController,
-      notificationPlugin: notificationPlugin);
-});
+    StateNotifierProvider<TimerViewModel, TimerViewState>(
+        (ref) => TimerViewModel(ref: ref));

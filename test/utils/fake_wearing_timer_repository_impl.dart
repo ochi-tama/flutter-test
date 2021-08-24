@@ -3,6 +3,11 @@ import 'package:test_app/domain/models/wearing_timer/wearing_timer_repository.da
 
 class FakeWearingTimerRepositoryImpl extends WearingTimerRepository {
   WearingTimer? _wearingTimer;
+
+  FakeWearingTimerRepositoryImpl({WearingTimer? wearingTimer}) {
+    _wearingTimer = wearingTimer;
+  }
+
   Future<WearingTimer?> find() async {
     return _wearingTimer;
   }

@@ -15,37 +15,6 @@ class TimerButton extends HookConsumerWidget {
   /// No Doc
   const TimerButton({Key? key}) : super(key: key);
 
-  /// No Doc
-  Widget buildStartButton(BuildContext context) {
-    return Container(
-      child: FloatingActionButton(
-        onPressed: onPressedHandler,
-        child: Text("Start"),
-      ),
-    );
-  }
-
-  /// NoDoc
-  Widget buildStopButton(BuildContext context) {
-    return Container(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FloatingActionButton(
-          onPressed: onPressedHandler,
-          child: Text("Stop"),
-        ),
-        FloatingActionButton(
-          onPressed: onPressedHandler,
-          child: Text("Cancel"),
-        ),
-      ],
-    ));
-  }
-
-  /// No Doc
-  void onPressedHandler() => print(123);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isTimerActivated = ref.watch(isTimerActivatedProvider);
