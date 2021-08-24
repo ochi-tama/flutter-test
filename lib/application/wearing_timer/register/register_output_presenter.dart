@@ -2,7 +2,7 @@ import 'register_output_data.dart';
 import 'register_output_port.dart';
 
 /// No Doc
-class RegisterOutputPresenter extends RegisterOutputPort {
+class RegisterOutputPresenter implements RegisterOutputPort {
   /// No Doc
   RegisterOutputPresenter({this.startDate, this.endDate, this.duration});
 

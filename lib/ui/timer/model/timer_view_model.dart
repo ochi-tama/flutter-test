@@ -29,8 +29,6 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
   void setDuration(int? duration) {
     if (duration == null) return;
     state = TimerViewState.durationSet(duration: duration);
-    print("set Duration");
-    return;
   }
 
   /// No Doc

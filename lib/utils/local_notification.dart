@@ -9,7 +9,7 @@ import 'notification_plugin.dart';
 const String _notificationChannelId = "notificationChannel";
 
 /// No Doc
-class LocalNotification extends NotificationPlugin {
+class LocalNotification implements NotificationPlugin {
   /// No Doc
   LocalNotification() : _plugin = FlutterLocalNotificationsPlugin();
   final FlutterLocalNotificationsPlugin _plugin;

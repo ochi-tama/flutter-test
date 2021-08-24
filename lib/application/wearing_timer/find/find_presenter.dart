@@ -3,7 +3,7 @@ import 'find_output_port.dart';
 import 'find_presenter_notifier.dart';
 
 /// No Doc
-class FindPresenter extends FindOutputPort {
+class FindPresenter implements FindOutputPort {
   /// No Doc
   FindPresenter(FindPresenterNotifier notifier) : _notifier = notifier;
 
