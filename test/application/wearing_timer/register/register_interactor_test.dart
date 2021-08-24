@@ -6,6 +6,7 @@ import 'package:test_app/application/wearing_timer/register/register_interactor.
 import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
 import 'package:test_app/provider.dart';
 
+import '../../../utils/data/fake_wearing_timer.dart';
 import '../../../utils/fake_wearing_timer_repository_impl.dart';
 
 void main() {
@@ -20,7 +21,7 @@ void main() {
       ],
     );
     final repository = container.read(wearingTimerRepositoryProvider);
-    final outputPort = container.read(findPresenterProvider);
+    final outputPort = container.read(findPresenterNotifierProvider.notifier);
     registerInteractor = RegisterInteractor(
         repository: repository, registerOutputPort: outputPort);
   });
@@ -31,8 +32,8 @@ void main() {
     final endDate = startDate.add(Duration(days: duration));
     final registerInputData = RegisterInputData(startDate, duration);
 
-    final initialOutputData = container.read(findPresenterNotifierProvider);
-    expect(initialOutputData, equals(FindPresenterData()));
+    expect(container.read(findPresenterNotifierProvider),
+        equals(FindPresenterData()));
 
     await registerInteractor.handle(registerInputData);
 

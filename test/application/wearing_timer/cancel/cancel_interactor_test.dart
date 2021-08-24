@@ -21,7 +21,7 @@ void main() {
         ],
       );
       final repository = container.read(wearingTimerRepositoryProvider);
-      final outputPort = container.read(findPresenterProvider);
+      final outputPort = container.read(findPresenterNotifierProvider.notifier);
       cancelInteractor =
           CancelInteractor(repository: repository, findOutputPort: outputPort);
     });
@@ -32,15 +32,16 @@ void main() {
           .read(wearingTimerControllerProvider)
           .registerWearingTimer(testRegisterData);
 
-      await cancelInteractor.handle();
+      final registerdTimer =
+          await container.read(wearingTimerRepositoryProvider).find();
+      expect(registerdTimer, TestWearingTimerData.wearingTimerStarted());
 
+      await cancelInteractor.handle();
       final result =
           await container.read(wearingTimerRepositoryProvider).find();
       expect(result, isNull);
       final outputData = await container.read(findPresenterNotifierProvider);
       expect(outputData, equals(FindPresenterData()));
     });
-
-    test('find method return null object if no data stored', () async {});
   });
 }

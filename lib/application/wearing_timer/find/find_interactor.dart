@@ -3,16 +3,8 @@ import 'data/find_output_data.dart';
 import 'find_input_port.dart';
 import 'find_output_port.dart';
 
-/*
-final FindInteractorProvider = Provider<FindInteractor>(
-  (ref) => {
-    FindInteractor(ref.read(FindOutputPresenterProvider));
-  }
-)
-*/
-
 /// NoDoc
-class FindInteractor extends FindInputPort {
+class FindInteractor implements FindInputPort {
   /// NoDoc
   FindInteractor(
       {required WearingTimerRepository wbRepository,

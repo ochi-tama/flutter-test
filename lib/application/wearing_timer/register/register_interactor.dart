@@ -6,7 +6,7 @@ import 'register_input_data.dart';
 import 'register_input_port.dart';
 
 /// No Doc
-class RegisterInteractor extends RegisterInputPort {
+class RegisterInteractor implements RegisterInputPort {
   /// No Doc
   RegisterInteractor(
       {required WearingTimerRepository repository,

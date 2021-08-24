@@ -4,7 +4,7 @@ import '../find/find_output_port.dart';
 import 'interface/cancel_input_port.dart';
 
 /// No Doc
-class CancelInteractor extends CancelInputPort {
+class CancelInteractor implements CancelInputPort {
   /// No Doc
   CancelInteractor(
       {required WearingTimerRepository repository,
