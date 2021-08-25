@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../provider.dart';
 import 'duartion_menu.dart';
+import 'model/timer_view_state.dart';
 import 'timer_button.dart';
 
 /// Timer Page
@@ -15,18 +17,37 @@ class TimerPage extends HookConsumerWidget {
   /// No Doc
   const TimerPage({Key? key}) : super(key: key);
 
-  String _displayRemainedDays(int? days) {
-    if (days == null) {
-      return "未登録";
-    } else {
-      return '残り $days 日';
+  Widget _displayRemaindDuration(BuildContext context, TimerViewState state) {
+    if (state is! TimerViewStateActivated) {
+      return Column(
+        children: [
+          Text(
+            '未登録',
+            style: Theme.of(context).textTheme.headline2,
+          ),
+        ],
+      );
     }
+
+    final remaindDays = state.remainedDays;
+    final endDate = DateFormat('yyyy年MM月dd日').format(state.endDate);
+    return Column(
+      children: [
+        Text(
+          '残り $remaindDays 日',
+          style: Theme.of(context).textTheme.headline2,
+        ),
+        Text(
+          '予定日: $endDate',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final remainedDays =
-        ref.watch(timerViewModelProvider.select((value) => value.remainedDays));
+    final registerdTimer = ref.watch(timerViewModelProvider);
     final notifier = ref.read(timerViewModelProvider.notifier);
     useEffect(() {
       Future.microtask(() async {
@@ -34,16 +55,12 @@ class TimerPage extends HookConsumerWidget {
       });
     }, const []);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Text(
-          _displayRemainedDays(remainedDays),
-          style: Theme.of(context).textTheme.headline2,
-        ),
-        DurationMenu(),
-        TimerButton()
-      ],
-    );
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _displayRemaindDuration(context, registerdTimer),
+          DurationMenu(),
+          TimerButton()
+        ]);
   }
 }

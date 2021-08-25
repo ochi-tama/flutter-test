@@ -31,7 +31,7 @@ class TimerViewState with _$TimerViewState {
     final duration = data.duration;
 
     if (startDate != null && endDate != null) {
-      final remainedDays = endDate.difference(startDate).inDays;
+      final remainedDays = endDate.difference(DateTime.now()).inDays;
       return TimerViewState.activated(
           startDate: startDate,
           endDate: endDate,

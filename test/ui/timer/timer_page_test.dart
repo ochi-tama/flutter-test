@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_app/application/wearing_timer/find/find_presenter_notifier.dart';
+import 'package:intl/intl.dart' as date;
+import 'package:test_app/domain/models/wearing_timer/wearing_timer.dart';
 import 'package:test_app/provider.dart';
 import 'package:test_app/ui/timer/timer.dart';
 
@@ -34,7 +35,7 @@ void main() {
     });
 
     testWidgets(
-        'Given registerd Timer '
+        'Given non activated timer registerd to repository'
         'When timer page is loaded '
         'Then timer page displays 未登録', (tester) async {
       await tester.pumpWidget(ProviderScope(
@@ -45,18 +46,42 @@ void main() {
                         TestWearingTimerData.wearingTimerNotStarted()))),
             localNotificationProvider.overrideWithProvider(
                 Provider((ref) => FakeLocalNotification())),
-            findPresenterNotifierProvider.overrideWithValue(
-                FindPresenterNotifier(
-                    data: TestWearingTimerData
-                        .findPresenterDataFilledWithAllParameters())),
           ],
           child: Directionality(
               textDirection: TextDirection.ltr,
               child: Material(child: TimerPage()))));
 
-      final expectedDuration = TestWearingTimerData.duration;
-      final textFinder = find.text('残り $expectedDuration 日');
+      // final textFinder = find.text('残り $expectedDuration 日');
+      final textFinder = find.text('未登録');
       expect(textFinder, findsOneWidget);
+    });
+    testWidgets(
+        'Given an activated timer registerd to repository'
+        'When timer page is loaded '
+        'Then timer page displays 未登録', (tester) async {
+      final testTimer =
+          WearingTimer(startDate: DateTime.now(), duration: 14).startTimer();
+      await tester.pumpWidget(
+        ProviderScope(
+            overrides: [
+              wearingTimerRepositoryProvider.overrideWithProvider(Provider(
+                  (ref) =>
+                      FakeWearingTimerRepositoryImpl(wearingTimer: testTimer))),
+              localNotificationProvider.overrideWithProvider(
+                  Provider((ref) => FakeLocalNotification())),
+            ],
+            child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Material(child: TimerPage()))),
+      );
+      await tester.pumpAndSettle(Duration(seconds: 5));
+
+      final remainedDaysFinder = find.text('残り ${testTimer.duration - 1} 日');
+      final endDate = testTimer.endDate as DateTime;
+      final endDateFinder =
+          find.text('予定日: ${date.DateFormat("yyyy年MM月dd日").format(endDate)}');
+      expect(remainedDaysFinder, findsOneWidget);
+      expect(endDateFinder, findsOneWidget);
     });
   });
 }
