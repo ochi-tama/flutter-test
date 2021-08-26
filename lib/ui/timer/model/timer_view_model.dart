@@ -55,7 +55,7 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
   Future<void> cancelTimer() async {
     await _wearingTimerController.cancelWearingTimer();
     _plugin.cancelNotification();
-    state = TimerViewState.createStateFromResponse(_readDateFromProvider());
+    state = TimerViewState.initial(duration: state.duration);
   }
 
   /// register timer & set notification
