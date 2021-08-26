@@ -102,7 +102,7 @@ void main() {
               (s) => s.groupValue, "group value", WearingDuration.oneMonth));
     });
     testWidgets(
-        'Given initial State'
+        'Given initial State '
         'When timer is activated'
         'Then duration menu is not visible', (tester) async {
       await tester.pumpWidget(ProviderScope(
@@ -116,8 +116,6 @@ void main() {
                 FindPresenterNotifier(
                     data: TestWearingTimerData
                         .findPresenterDataFilledWithAllParameters())),
-
-            /// TimerActivated state
           ],
           child: Directionality(
               textDirection: TextDirection.ltr,

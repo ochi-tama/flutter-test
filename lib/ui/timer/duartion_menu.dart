@@ -26,7 +26,7 @@ class DurationMenu extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _timerState = ref.watch(timerViewModelProvider);
-    final _handler = ref.watch(timerViewModelProvider.notifier).setDuration;
+    final _handler = ref.read(timerViewModelProvider.notifier).setDuration;
 
     final _visible = _timerState is TimerViewStateActivated ? false : true;
     final groupValue = _timerState.duration;
