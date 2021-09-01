@@ -2,6 +2,8 @@ import 'package:riverpod/riverpod.dart';
 
 import 'application/wearing_timer/cancel/cancel_interactor.dart';
 import 'application/wearing_timer/cancel/interface/cancel_input_port.dart';
+import 'application/wearing_timer/complete/complete_presenter.dart';
+import 'application/wearing_timer/complete/data/complete_presenter_data.dart';
 import 'application/wearing_timer/find/data/find_presenter_data.dart';
 import 'application/wearing_timer/find/find_input_port.dart';
 import 'application/wearing_timer/find/find_interactor.dart';
@@ -81,3 +83,8 @@ final wearingTimerControllerProvider = Provider<WearingTimerController>((ref) {
 final timerViewModelProvider =
     StateNotifierProvider<TimerViewModel, TimerViewState>(
         (ref) => TimerViewModel(ref: ref));
+
+/// No Doc
+final completePresenterProvider =
+    StateNotifierProvider<CompletePresenter, CompletePresenterData>(
+        (ref) => CompletePresenter());
