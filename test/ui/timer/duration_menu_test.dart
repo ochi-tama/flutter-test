@@ -107,9 +107,31 @@ void main() {
         'Then duration menu is not visible', (tester) async {
       await tester.pumpWidget(ProviderScope(
           overrides: [
-            wearingTimerRepositoryProvider.overrideWithProvider(Provider(
-                (ref) => FakeWearingTimerRepositoryImpl(
-                    wearingTimer: TestWearingTimerData.wearingTimerStarted()))),
+            wearingTimerRepositoryProvider.overrideWithProvider(
+                Provider((ref) => FakeWearingTimerRepositoryImpl())),
+            localNotificationProvider.overrideWithProvider(
+                Provider((ref) => FakeLocalNotification())),
+            findPresenterNotifierProvider.overrideWithValue(
+                FindPresenterNotifier(
+                    data: TestWearingTimerData
+                        .findPresenterDataTimerNowStarted())),
+          ],
+          child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Material(child: DurationMenu()))));
+
+      final widgetsList = tester.widgetList(find.byType(AnimatedOpacity));
+      expect(widgetsList.first,
+          isA<AnimatedOpacity>().having((s) => s.opacity, "opacity", 0.0));
+    });
+    testWidgets(
+        'Given a timer is completed '
+        'When page is loaded '
+        'Then duration menu is not visible', (tester) async {
+      await tester.pumpWidget(ProviderScope(
+          overrides: [
+            wearingTimerRepositoryProvider.overrideWithProvider(
+                Provider((ref) => FakeWearingTimerRepositoryImpl())),
             localNotificationProvider.overrideWithProvider(
                 Provider((ref) => FakeLocalNotification())),
             findPresenterNotifierProvider.overrideWithValue(
