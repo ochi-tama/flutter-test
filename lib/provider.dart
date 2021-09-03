@@ -97,3 +97,13 @@ final completeInteractorProvider = Provider<CompleteInputPort>((ref) {
   final outputPort = ref.read(completePresenterProvider.notifier);
   return CompleteInteractor(repository: repository, outputPort: outputPort);
 });
+
+/// No Doc
+final isTimerActivatedOrCompletedProvider = Provider<bool>((ref) {
+  final viewModel = ref.watch(timerViewModelProvider);
+  final isTimerActivatedOrCompleted = (viewModel is TimerViewStateActivated ||
+          viewModel is TimerViewStateCompleted)
+      ? true
+      : false;
+  return isTimerActivatedOrCompleted;
+});

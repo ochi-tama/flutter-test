@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../provider.dart';
-import 'model/timer_view_state.dart';
 
-/// No Doc
-final isTimerActivatedProvider = Provider<bool>((ref) {
-  final viewModel = ref.watch(timerViewModelProvider);
-  final isTimerActivatedOrCompleted = (viewModel is TimerViewStateActivated ||
-          viewModel is TimerViewStateCompleted)
-      ? true
-      : false;
-  return isTimerActivatedOrCompleted;
-});
+import '../../provider.dart';
 
 /// No Doc
 class TimerButton extends HookConsumerWidget {
@@ -20,7 +10,7 @@ class TimerButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isTimerActivated = ref.watch(isTimerActivatedProvider);
+    final isTimerActivated = ref.watch(isTimerActivatedOrCompletedProvider);
     final notifier = ref.read(timerViewModelProvider.notifier);
     if (isTimerActivated) {
       return ElevatedButton(onPressed: notifier.cancelTimer, child: Text("停止"));
