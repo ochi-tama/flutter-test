@@ -32,6 +32,14 @@ class TimerViewState with _$TimerViewState {
 
     if (startDate != null && endDate != null) {
       final remainedDays = endDate.difference(DateTime.now()).inDays;
+      if (remainedDays <= 0) {
+        return TimerViewState.completed(
+            startDate: startDate,
+            endDate: endDate,
+            duration: duration,
+            remainedDays: remainedDays);
+      }
+
       return TimerViewState.activated(
           startDate: startDate,
           endDate: endDate,
@@ -48,7 +56,7 @@ class TimerViewState with _$TimerViewState {
 
   /// initial state
   factory TimerViewState.initial(
-      {@Default(14) int? duration, int? remainedDays}) = TimewViewStateInitial;
+      {@Default(14) int? duration, int? remainedDays}) = TimerViewStateInitial;
 
   /// loading state
   factory TimerViewState.loading(
@@ -71,6 +79,13 @@ class TimerViewState with _$TimerViewState {
       required DateTime endDate,
       @Default(14) int? duration,
       int? remainedDays}) = TimerViewStateActivated;
+
+  /// timer completed state
+  factory TimerViewState.completed(
+      {required DateTime startDate,
+      required DateTime endDate,
+      @Default(14) int? duration,
+      int? remainedDays}) = TimerViewStateCompleted;
 
   /// error state
   factory TimerViewState.error(
