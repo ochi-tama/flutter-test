@@ -6,8 +6,11 @@ import 'model/timer_view_state.dart';
 /// No Doc
 final isTimerActivatedProvider = Provider<bool>((ref) {
   final viewModel = ref.watch(timerViewModelProvider);
-  final isTimerActivated = viewModel is TimerViewStateActivated ? true : false;
-  return isTimerActivated;
+  final isTimerActivatedOrCompleted = (viewModel is TimerViewStateActivated ||
+          viewModel is TimerViewStateCompleted)
+      ? true
+      : false;
+  return isTimerActivatedOrCompleted;
 });
 
 /// No Doc
