@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:test_app/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../ui/home.dart';
@@ -19,7 +21,7 @@ class LocalNotification implements NotificationPlugin {
           importance: Importance.max, priority: Priority.high));
 
   /// initialize with select notification handler
-  Future<void> initializeSettings(BuildContext context) async {
+  Future<void> initializeSettings(BuildContext context, WidgetRef ref) async {
     // initialise the plugin. app_icon needs to be a
     // added as a drawable resource to the Android head project
     const initializationSettingsAndroid =
@@ -31,7 +33,7 @@ class LocalNotification implements NotificationPlugin {
         iOS: initializationSettingsIOS,
         macOS: initializationSettingsMacOS);
     await _plugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification(context));
+        onSelectNotification: selectNotification(context, ref));
   }
 
   /// No Doc
@@ -50,7 +52,6 @@ class LocalNotification implements NotificationPlugin {
   Future<void> zonedScheduleNotification(DateTime startDate, int days) async {
     final scheduledDate =
         tz.TZDateTime.from(startDate, tz.local).add(Duration(days: days));
-
     //final scheduledDate =
     //    tz.TZDateTime.from(startDate, tz.local).add(Duration(seconds: 5));
     await _plugin.zonedSchedule(
@@ -62,11 +63,14 @@ class LocalNotification implements NotificationPlugin {
 }
 
 /// configure event when tapping notifications.
-Future<void> Function(String?) selectNotification(BuildContext context) {
+Future<void> Function(String?) selectNotification(
+    BuildContext context, WidgetRef ref) {
   return (payload) async {
     if (payload != null) {
       debugPrint('notification payload: $payload');
     }
+
+    await ref.read(timerViewModelProvider.notifier).completeTimer();
     await Navigator.push(
       context,
       MaterialPageRoute<void>(builder: (context) => HomePage()),

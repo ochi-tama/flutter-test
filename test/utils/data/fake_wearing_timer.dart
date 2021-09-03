@@ -33,6 +33,14 @@ class TestWearingTimerData {
         startDate: startDate, endDate: endDate, duration: duration);
   }
 
+  static WearingTimer wearingTimerCompleted() {
+    return WearingTimer(
+        startDate: startDate,
+        duration: duration,
+        endDate: endDate,
+        actualEndDate: endDate);
+  }
+
   static FindOutputData initialFindOutputData() {
     return FindOutputData();
   }
@@ -53,6 +61,14 @@ class TestWearingTimerData {
   static FindPresenterData findPresenterDataFilledWithAllParameters() {
     return FindPresenterData(
         startDate: startDate, endDate: endDate, duration: duration);
+  }
+
+  static FindPresenterData findPresenterDataTimerNowStarted() {
+    final date = DateTime.now().add(Duration(days: 5));
+    return FindPresenterData(
+        startDate: date,
+        duration: duration,
+        endDate: date.add(Duration(days: duration)));
   }
 
   static FindPresenterData findPresenterDataTimerNotStarted() {

@@ -19,10 +19,11 @@ class TimerPage extends HookConsumerWidget {
 
   Widget _displayRemaindDuration(BuildContext context, TimerViewState state) {
     if (state is! TimerViewStateActivated) {
+      final message = state is TimerViewStateCompleted ? "交換日" : "未登録";
       return Column(
         children: [
           Text(
-            '未登録',
+            message,
             style: Theme.of(context).textTheme.headline2,
           ),
         ],
