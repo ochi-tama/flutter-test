@@ -70,4 +70,11 @@ class TimerViewModel extends StateNotifier<TimerViewState> {
     state = TimerViewState.createStateFromResponse(_readDateFromProvider());
     _plugin.zonedScheduleNotification(startDate, duration);
   }
+
+  /// No Doc
+  Future<void> completeTimer() async {
+    await _wearingTimerController.completeWearingTimer();
+    await _wearingTimerController.findWearingTimer();
+    state = TimerViewState.createStateFromResponse(_readDateFromProvider());
+  }
 }

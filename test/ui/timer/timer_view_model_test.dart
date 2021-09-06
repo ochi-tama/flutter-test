@@ -82,4 +82,31 @@ void main() {
       expect(container.read(timerViewModelProvider), equals(expectedState));
     });
   });
+
+  group("complete timer function", () {
+    test(
+        'Given a wearing timer is registerd '
+        'When complete function is triggerd '
+        'Then timer state is updated to complete state', () async {
+      final testData = TestWearingTimerData.wearingTimerStarted();
+      await container.read(wearingTimerRepositoryProvider).save(testData);
+      final timerViewModelHandler =
+          container.read(timerViewModelProvider.notifier);
+      await timerViewModelHandler.completeTimer();
+      // final expectedState = container.read(timerViewModelProvider);
+      expect(container.read(timerViewModelProvider),
+          isA<TimerViewStateCompleted>());
+    });
+    test(
+        'Given a wearing timer is not registerd '
+        'When complete function is triggerd '
+        'Then timer state is not changed', () async {
+      final timerViewModelHandler =
+          container.read(timerViewModelProvider.notifier);
+      await timerViewModelHandler.completeTimer();
+      // final expectedState = container.read(timerViewModelProvider);
+      expect(
+          container.read(timerViewModelProvider), isA<TimerViewStateInitial>());
+    });
+  });
 }

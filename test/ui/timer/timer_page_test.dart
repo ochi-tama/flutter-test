@@ -126,4 +126,39 @@ void main() {
               (s) => s.groupValue, "group value", WearingDuration.oneWeek));
     });
   });
+
+  testWidgets(
+      'Given an activated timer registerd to repository'
+      'When the timer is completed'
+      'Then timer page displays 交換日', (tester) async {
+    // final testTimer =
+    //    WearingTimer(startDate: DateTime.now(), duration: 14).startTimer();
+    await tester.pumpWidget(
+      ProviderScope(
+          overrides: [
+            wearingTimerRepositoryProvider.overrideWithProvider(Provider(
+                (ref) => FakeWearingTimerRepositoryImpl(
+                    wearingTimer:
+                        TestWearingTimerData.wearingTimerCompleted()))),
+            localNotificationProvider.overrideWithProvider(
+                Provider((ref) => FakeLocalNotification())),
+          ],
+          child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Material(child: TimerPage()))),
+    );
+    await tester.pumpAndSettle(Duration(seconds: 5));
+
+    final endDateFinder = find.text('交換日');
+    expect(endDateFinder, findsOneWidget);
+
+    // Duration Menu is not visible
+    final widgetsList = tester.widgetList(find.byType(AnimatedOpacity));
+    expect(widgetsList.first,
+        isA<AnimatedOpacity>().having((s) => s.opacity, "opacity", 0.0));
+
+    // Cancel button is enabled
+    final buttonFinder = find.text('停止');
+    expect(buttonFinder, findsOneWidget);
+  });
 }

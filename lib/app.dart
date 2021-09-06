@@ -18,7 +18,7 @@ class MyApp extends HookConsumerWidget {
     final localNotificationPlugin = ref.read(localNotificationProvider);
     useEffect(() {
       Future.microtask(() async {
-        await localNotificationPlugin.initializeSettings(context);
+        await localNotificationPlugin.initializeSettings(context, ref);
       });
     }, const []);
 
