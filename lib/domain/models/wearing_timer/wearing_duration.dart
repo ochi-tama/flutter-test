@@ -26,7 +26,6 @@ class WearingDuration {
 
   /// No Doc
   static final durationMap = {
-    oneDayKey: oneDay,
     oneWeekKey: oneWeek,
     twoWeekKey: twoWeek,
     oneMonthKey: oneMonth,
