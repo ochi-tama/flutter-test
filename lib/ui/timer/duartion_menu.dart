@@ -31,13 +31,15 @@ class DurationMenu extends HookConsumerWidget {
     final buttonList = WearingDuration.durationMap.entries
         .map((e) => _buildDurationButton(e.key, e.value, groupValue, _handler))
         .toList();
-    // TODO: 透明時にはボタンを非アクティブにする
+
     return AnimatedOpacity(
         opacity: _timerActivatedOrCompleted ? 0.0 : 1.0,
         duration: Duration(milliseconds: 500),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: buttonList,
-        ));
+        child: IgnorePointer(
+            ignoring: _timerActivatedOrCompleted,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: buttonList,
+            )));
   }
 }

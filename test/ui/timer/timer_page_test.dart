@@ -53,14 +53,13 @@ void main() {
               textDirection: TextDirection.ltr,
               child: Material(child: TimerPage()))));
 
-      // final textFinder = find.text('残り $expectedDuration 日');
       final textFinder = find.text('未登録');
       expect(textFinder, findsOneWidget);
     });
     testWidgets(
         'Given an activated timer registerd to repository'
         'When timer page is loaded '
-        'Then timer page displays 未登録', (tester) async {
+        'Then timer page displays "残り14日', (tester) async {
       final testTimer =
           WearingTimer(startDate: DateTime.now(), duration: 14).startTimer();
       await tester.pumpWidget(
@@ -78,7 +77,7 @@ void main() {
       );
       await tester.pumpAndSettle(Duration(seconds: 5));
 
-      final remainedDaysFinder = find.text('残り ${testTimer.duration - 1} 日');
+      final remainedDaysFinder = find.text('残り ${testTimer.duration} 日');
       final endDate = testTimer.endDate as DateTime;
       final endDateFinder =
           find.text('予定日: ${date.DateFormat("yyyy年MM月dd日").format(endDate)}');
@@ -125,6 +124,39 @@ void main() {
           isA<Radio<int>>().having(
               (s) => s.groupValue, "group value", WearingDuration.oneWeek));
     });
+  });
+
+  testWidgets(
+      'Given the timer is completed '
+      'When the duration button (2 week) is clicked '
+      'Then Duration menu is disabled '
+      'and the groupValue is not changed.', (tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+          overrides: [
+            wearingTimerRepositoryProvider.overrideWithProvider(Provider(
+                (ref) => FakeWearingTimerRepositoryImpl(
+                    wearingTimer:
+                        TestWearingTimerData.wearingTimerCompleted()))),
+            localNotificationProvider.overrideWithProvider(
+                Provider((ref) => FakeLocalNotification())),
+          ],
+          child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Material(child: TimerPage()))),
+    );
+    await tester.pumpAndSettle(Duration(seconds: 5));
+
+    final key = Key(WearingDuration.twoWeekKey);
+    await tester.tap(find.byKey(key));
+    await tester.pump();
+
+    // Group value is still oneWeek (not updated)
+    final widgetsList = tester.widgetList(find.byType(typeOf<Radio<int>>()));
+    expect(
+        widgetsList.first,
+        isA<Radio<int>>().having(
+            (s) => s.groupValue, "group value", WearingDuration.oneWeek));
   });
 
   testWidgets(

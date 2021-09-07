@@ -26,6 +26,15 @@ class TimerPage extends HookConsumerWidget {
             message,
             style: Theme.of(context).textTheme.headline2,
           ),
+          Visibility(
+              visible: false,
+              maintainAnimation: true,
+              maintainSize: true,
+              maintainState: true,
+              child: Text(
+                '予定日:',
+                style: Theme.of(context).textTheme.headline6,
+              )),
         ],
       );
     }
@@ -59,7 +68,11 @@ class TimerPage extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _displayRemaindDuration(context, registerdTimer),
+          Column(
+            children: [
+              _displayRemaindDuration(context, registerdTimer),
+            ],
+          ),
           DurationMenu(),
           TimerButton()
         ]);
