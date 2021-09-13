@@ -30,7 +30,7 @@ class MyApp extends HookConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('jp', ''), // English, no country code
+        const Locale('ja', ''), // English, no country code
         const Locale('en', ''), // Spanish, no country code
       ],
       // LoginScreen.id,
