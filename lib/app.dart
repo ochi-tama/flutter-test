@@ -3,11 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'indexed_stackbar.dart';
+import 'home.dart';
 import 'provider.dart';
-import 'ui/history.dart';
-import 'ui/home.dart';
-import 'ui/timer/timer.dart';
 
 /// アプリ本体
 class MyApp extends HookConsumerWidget {
@@ -23,25 +20,25 @@ class MyApp extends HookConsumerWidget {
     }, const []);
 
     return MaterialApp(
-      initialRoute: IndexedStackBar.id,
+      // initialRoute: IndexedStackBar.id,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('jp', ''), // English, no country code
-        const Locale('en', ''), // Spanish, no country code
+        const Locale('ja', ''), // Japanese, no country code
+        const Locale('en', ''), // English, no country code
       ],
-      // LoginScreen.id,
+      initialRoute: "/",
       routes: {
         // 情報サイト側
-        TimerPage.id: (context) => TimerPage(),
-        HistoryPage.id: (context) => HistoryPage(),
-        HomePage.id: (context) => HomePage(),
+        "/": (context) => Home(),
+        // HistoryPage.id: (context) => HistoryPage(),
+        // HomePage.id: (context) => HomePage(),
         // Menu画面
 
-        IndexedStackBar.id: (context) => IndexedStackBar(),
+        // IndexedStackBar.id: (context) => IndexedStackBar(),
       },
     );
   }

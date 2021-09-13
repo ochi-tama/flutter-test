@@ -39,22 +39,6 @@ void main() {
           isA<Radio<int>>().having(
               (s) => s.groupValue, "group value", WearingDuration.twoWeek));
     });
-    testWidgets(
-        'Given initial State '
-        'When 1day Radio button is tapped'
-        'Then group value is changed 1', (tester) async {
-      await tester.pumpWidget(renderWithRiverpodForTest(DurationMenu()));
-
-      final key = Key(WearingDuration.oneDayKey);
-      await tester.tap(find.byKey(key));
-      await tester.pump();
-      // Group value is an initial selected value of Radio button
-      final widgetsList = tester.widgetList(find.byType(typeOf<Radio<int>>()));
-      expect(
-          widgetsList.first,
-          isA<Radio<int>>().having(
-              (s) => s.groupValue, "group value", WearingDuration.oneDay));
-    });
 
     testWidgets(
         'Given initial State '
